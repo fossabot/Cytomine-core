@@ -19,6 +19,10 @@ package be.cytomine.security
 import be.cytomine.api.RestController
 import grails.converters.JSON
 import grails.plugin.springsecurity.SpringSecurityUtils
+import org.apache.commons.lang.RandomStringUtils
+import org.imsglobal.lti.launch.LtiOauthVerifier
+import org.imsglobal.lti.launch.LtiVerificationResult
+import org.imsglobal.lti.launch.LtiVerifier
 import org.springframework.security.authentication.AccountExpiredException
 import org.springframework.security.authentication.CredentialsExpiredException
 import org.springframework.security.authentication.DisabledException
@@ -33,6 +37,7 @@ class LoginController extends RestController {
     def secUserService
     def currentRoleServiceProxy
     def cytomineService
+    def storageService
 
     static final long ONE_MINUTE_IN_MILLIS=60000;//millisecs
 
@@ -237,6 +242,73 @@ class LoginController extends RestController {
         } else {
             response([success: false, message: "Error : token invalid"], 400)
         }
+
+    }
+
+    // TODO add a custom_parameter to know on which project the user has access.
+    def loginWithLTI() {
+
+        String consumerName = params.tool_consumer_instance_name
+
+        def consumer = grailsApplication.config.grails.LTIConsumer.get(consumerName)
+        String privateKey = consumer?.secret
+
+        if(!privateKey) {
+            response([success: false, message: "Untrusted LTI Consumer"], 400)
+            return
+        }
+
+        // check LTI/Oauth validity
+        LtiVerifier ltiVerifier = new LtiOauthVerifier();
+        LtiVerificationResult ltiResult = ltiVerifier.verify(request, privateKey);
+
+        if(!ltiResult.getSuccess()){
+            response([success: false, message: "LTI verification failed"], 400)
+            return
+        }
+        //if valid, check if all the need value are set
+        if(! (params.lis_person_name_given && params.lis_person_name_family)) {
+            response([success: false, message: "Not enough information for LTI connexion"], 400)
+            return
+        }
+
+        def roles = params.roles?.split(",")
+
+        String firstname = params.lis_person_name_given
+        String lastname = params.lis_person_name_family
+        String email = params.lis_person_contact_email_primary
+
+        String username = consumerName+"_"+lastname+"_"+firstname
+        User user = User.findByUsername(username) //we are not logged, so we bypass the service
+
+        if(!user){
+            if(!email){
+                response([success: false, message: "Not enough information to create a LTI profil"], 400)
+                return
+            }
+
+            log.info "LTI connexion. Create new user "+username
+
+            user = new User(
+                    firstname : firstname,
+                    lastname : lastname,
+                    email: email,
+                    username: username,
+                    password: RandomStringUtils.random(32,  (('A'..'Z') + ('0'..'0')).join().toCharArray())
+            ).save(flush : true, failOnError: true)
+
+            if(roles?.contains("Instructor")) {
+                SecUserSecRole.create(user, SecRole.findByAuthority("ROLE_USER"))
+            }else {
+                SecUserSecRole.create(user, SecRole.findByAuthority("ROLE_GUEST"))
+            }
+            storageService.initUserStorage(user)
+        }
+
+        // TODO : here add access to specified project
+
+        SpringSecurityUtils.reauthenticate user.username, null
+        redirect (uri : "/")
     }
 
     def buildToken() {

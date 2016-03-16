@@ -36,7 +36,7 @@ class APIAuthentificationFilters implements javax.servlet.Filter {
 
     void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
         //log with token id
-        boolean token = tryAPIAUhtentificationWithToken(request, response)
+        boolean token = tryAPIAuthentificationWithToken(request, response)
         if(!token) {
             //with signature (in header)
             tryAPIAuthentification(request, response)
@@ -98,7 +98,8 @@ class APIAuthentificationFilters implements javax.servlet.Filter {
         return false
     }
 
-    private boolean tryAPIAUhtentificationWithToken(ServletRequest request, ServletResponse response) {
+    private boolean tryAPIAuthentificationWithToken(ServletRequest request, ServletResponse response) {
+
         String tokenKey = request.getParameter("tokenKey");
 
         if(tokenKey!=null) {

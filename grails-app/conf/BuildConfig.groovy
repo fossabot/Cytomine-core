@@ -82,6 +82,7 @@ grails.project.dependency.resolution = {
         compile "javax.validation:validation-api:1.1.0.Final"
         runtime "org.hibernate:hibernate-validator:5.0.3.Final"
         compile 'commons-beanutils:commons-beanutils:1.8.3'
+        compile 'org.imsglobal:basiclti-util:1.1.1'
     }
     plugins {
         compile ":mongodb:3.0.2"
