@@ -108,6 +108,19 @@ var LayerSwitcherPanel = SideBarPanel.extend({
         });
         self.browseImageView.setLayerDrawable(layer.userID, layer.isOwner);
 
+        // ONLY FOR MOOC !! TO NOT ADD ON GITHUB
+        console.log("in addVectorLayer");
+
+        var specialImages = [1217722, 1218337,1217927, 1218727,1218530,1218120,1218942,1219597,1219330,1219137, 1517674, 1516906];
+        if($.inArray(Number(window.app.status.currentImage.idImage), specialImages) > -1) {
+            // change aussi le slider
+            self.browseImageView.setOpacity(0, 0);
+            $("#" + this.browseImageView.divId).find("#opacitySelectionSlider").slider('value', 0);
+        }
+        console.log($("#selectLayersAnnotationProperty-"+window.app.status.currentImage.idImage+" option[value='n']").filter(function(){return $(this).css('display')!=='none'}));
+        $("#selectLayersAnnotationProperty-"+window.app.status.currentImage.idImage+" option[value='n']").filter(function(){return $(this).css('display')!=='none'}).prop('selected',true)
+        $("#selectLayersAnnotationProperty-"+window.app.status.currentImage.idImage).trigger('change')
+
     },
     updateOnlineUsers: function (onlineUsers) {
         var self = this;

@@ -175,7 +175,8 @@ var AnnotationPropertyPanel = SideBarPanel.extend({
         }
         // if the option is no more visible return to No key selected
         // only method to check if an option is visible (in a select list !)
-        if($(document.getElementById(optionId)).attr('style') == "display: none;"){
+        var nbVisibleKeys = $("#selectLayersAnnotationProperty-"+window.app.status.currentImage.idImage+" option[value='n']").filter(function(){return $(this).css('display')!=='none'}).length
+        if(nbVisibleKeys === 0){
             $("#selectLayersAnnotationProperty-"+idImage).val('selectedEmpty');
         }
     }

@@ -36,7 +36,12 @@ var ProjectDashboardStats = Backbone.View.extend({
         //draw all
         if(!window.app.status.currentProjectModel.get('blindMode')) {
             var statsCollection = new StatsTermCollection({project: self.model.get('id')});
-            statsCollection.fetch({
+            $("#projectColumnChart").html(this.noDataAlert);
+            $("#projectPieChart").html(this.noDataAlert);
+            $("#userNbAnnotationsChart").html(this.noDataAlert);
+            $("#termSlideAnnotationsChart").html(this.noDataAlert);
+            $("#userSlideAnnotationsChart").html(this.noDataAlert);
+            /*statsCollection.fetch({
                 success: function (collection, response) {
                     self.drawColumnChart(collection, response, "#projectColumnChart", true);
                 }
@@ -65,6 +70,7 @@ var ProjectDashboardStats = Backbone.View.extend({
                 }
             });
             self.drawAnnotationNumberEvolutionByTermAction();
+            */
         } else {
             var message = '<div style="margin: 10px 10px 10px 0px" class="alert alert-warning"> <i class="icon-remove"/> Not available in blind mode!</div>';
              $("#annotationNumberEvolution").replaceWith("");

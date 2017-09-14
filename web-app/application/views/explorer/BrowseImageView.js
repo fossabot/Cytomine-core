@@ -963,7 +963,7 @@ BrowseImageView = Backbone.View.extend({
         if (this.review) {
             return;
         }
-        this.watchOnlineUsersInterval = window.app.view.addInterval(function () {
+        /*this.watchOnlineUsersInterval = window.app.view.addInterval(function () {
             if(self.layerSwitcherPanel.getDisplayedLayers().length > 1){
                 new UserOnlineModel({image: self.model.get("id")}).fetch({
                     success: function (model, response) {
@@ -972,7 +972,7 @@ BrowseImageView = Backbone.View.extend({
                     }
                 });
             }
-        }, 5000);
+        }, 5000);*/
     },
     stopWatchOnlineUsersInterval: function () {
         if(this.watchOnlineUsersInterval) clearInterval(this.watchOnlineUsersInterval.loop);

@@ -129,7 +129,7 @@ var UserDashboardView = Backbone.View.extend({
     initLastAction : function() {
         var self = this;
         var elem =  $(self.el).find("#userdashboardLastAction");
-        $.get("api/commandhistory.json?user="+window.app.status.user.id+"&max=100&offset=0", function(data) {
+        /*$.get("api/commandhistory.json?user="+window.app.status.user.id+"&max=100&offset=0", function(data) {
             var collection = data;
             var chartData = [
                 {
@@ -230,7 +230,7 @@ var UserDashboardView = Backbone.View.extend({
             }
 
 
-        });
+        });*/
     },
     initLastNews : function() {
         var self = this;

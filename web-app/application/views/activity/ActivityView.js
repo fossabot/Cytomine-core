@@ -77,35 +77,37 @@ var ActivityView = Backbone.View.extend({
     createProjectOnlineUserView : function() {
         var self = this;
         var refreshData = function () {
-            require(["text!application/templates/dashboard/OnlineUser.tpl.html"],
-                function (userOnlineTpl) {
-                    new UserOnlineCollection({project: self.model.id}).fetch({
-                        success: function (collection, response) {
-                            $("#onlineUserActivity").empty();
-                            collection.each(function (user) {
-                                //if undefined => user is cytomine admin but not in project!
-                                if (self.users.get(user.id) == undefined) {
-                                    return;
-                                }
+            if(!window.app.status.user.model.get("guestByNow")){
+                require(["text!application/templates/dashboard/OnlineUser.tpl.html"],
+                    function (userOnlineTpl) {
+                        new UserOnlineCollection({project: self.model.id}).fetch({
+                            success: function (collection, response) {
+                                $("#onlineUserActivity").empty();
+                                collection.each(function (user) {
+                                    //if undefined => user is cytomine admin but not in project!
+                                    if (self.users.get(user.id) == undefined) {
+                                        return;
+                                    }
 
-                                var positions = "";
-                                _.each(user.get('position'), function (position) {
-                                    positions += _.template(userOnlineTpl, {project: self.model.id, filename: window.app.minString(position.filename, 15, 10), image: position.image});
-                                });
+                                    var positions = "";
+                                    _.each(user.get('position'), function (position) {
+                                        positions += _.template(userOnlineTpl, {project: self.model.id, filename: window.app.minString(position.filename, 15, 10), image: position.image});
+                                    });
 
-                                //
-                                //var onlineUser = _.template("<br><div id='onlineUser-<%= id %>'><%= user %><ul><%= positions %></ul></div>", {
-                                var onlineUser = _.template('<div class="col-md-4"><h3><%= user %></h3><ul><%= positions %></ul></div>', {
-                                    id: user.id,
-                                    user: self.users.get(user.id).prettyName(),
-                                    positions: positions
+                                    //
+                                    //var onlineUser = _.template("<br><div id='onlineUser-<%= id %>'><%= user %><ul><%= positions %></ul></div>", {
+                                    var onlineUser = _.template('<div class="col-md-4"><h3><%= user %></h3><ul><%= positions %></ul></div>', {
+                                        id: user.id,
+                                        user: self.users.get(user.id).prettyName(),
+                                        positions: positions
+                                    });
+                                    $("#onlineUserActivity").append(onlineUser);
                                 });
-                                $("#onlineUserActivity").append(onlineUser);
-                            });
-                        }
-                    });
-                }
-            )
+                            }
+                        });
+                    }
+                )
+            }
         };
         refreshData();
         var interval = window.app.view.addInterval(refreshData, 5000);
@@ -169,30 +171,31 @@ var ActivityView = Backbone.View.extend({
 
             $("#projectListActivity").find("li").removeClass("active");
 
-            if(project) {
-                $("#projectListActivity").find("li#projectChoiceActivity"+project.id).addClass("active");
+            if (project) {
+                $("#projectListActivity").find("li#projectChoiceActivity" + project.id).addClass("active");
                 self.createProjectOnlineUserView();
             } else {
                 $("#projectListActivity").find("li#projectChoiceActivityALL").addClass("active");
             }
 
 
-
-            self.createUserSelect(project,idUser);
-            if(idUser) {
+            self.createUserSelect(project, idUser);
+            if (idUser) {
                 $("select#activityUser").val(idUser);
             }
             self.page = 0;
             var idProj = null;
-            if(self.model) {
+            if (self.model) {
                 idProj = self.model.id; //if idProj = null, get all projects data
             }
-            new CommandHistoryCollection({project: idProj,user:idUser,max: 30, fullData: true}).fetch({
-                success: function (collection, response) {
-                    self.historyCollection=collection;
-                    self.createCommandPanel();
-                }
-            });
+            if(!window.app.status.user.model.get("guestByNow")){
+                new CommandHistoryCollection({project: idProj, user: idUser, max: 30, fullData: true}).fetch({
+                    success: function (collection, response) {
+                        self.historyCollection = collection;
+                        self.createCommandPanel();
+                    }
+                });
+            }
 
             self.idUser = idUser;
             self.idProject = idProj;

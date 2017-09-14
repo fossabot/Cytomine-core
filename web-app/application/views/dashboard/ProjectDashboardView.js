@@ -320,35 +320,37 @@ var ProjectDashboardView = Backbone.View.extend({
     fetchUsersOnline: function () {
         var self = this;
         var refreshData = function () {
-            require(["text!application/templates/dashboard/OnlineUser.tpl.html"],
-                function (userOnlineTpl) {
-                    // TODO better managment of data autorefreshing : see Github #1076
-                    new UserOnlineCollection({project: self.model.id}).fetch({
-                        success: function (collection, response) {
-                            $("#userOnlineItem").empty();
-                            collection.each(function (user) {
-                                //if undefined => user is cytomine admin but not in project!
-                                if (window.app.models.projectUser.get(user.id) == undefined) {
-                                    return;
-                                }
+            if(!window.app.status.user.model.get("guestByNow")) {
+                require(["text!application/templates/dashboard/OnlineUser.tpl.html"],
+                    function (userOnlineTpl) {
+                        // TODO better managment of data autorefreshing : see Github #1076
+                        new UserOnlineCollection({project: self.model.id}).fetch({
+                            success: function (collection, response) {
+                                $("#userOnlineItem").empty();
+                                collection.each(function (user) {
+                                    //if undefined => user is cytomine admin but not in project!
+                                    if (window.app.models.projectUser.get(user.id) == undefined) {
+                                        return;
+                                    }
 
-                                var positions = "";
-                                _.each(user.get('position'), function (position) {
-                                    var image = new ImageModel(position);
-                                    var position = _.template(userOnlineTpl, {project: self.model.id, filename: window.app.minString(image.getVisibleName(window.app.status.currentProjectModel.get('blindMode')), 15, 10), image: position.image});
-                                    positions += position;
+                                    var positions = "";
+                                    _.each(user.get('position'), function (position) {
+                                        var image = new ImageModel(position);
+                                        var position = _.template(userOnlineTpl, {project: self.model.id, filename: window.app.minString(image.getVisibleName(window.app.status.currentProjectModel.get('blindMode')), 15, 10), image: position.image});
+                                        positions += position;
+                                    });
+                                    var onlineUser = _.template("<div id='onlineUser-<%= id %>'><%= user %><ul><%= positions %></ul></div>", {
+                                        id: user.id,
+                                        user: window.app.models.projectUser.get(user.id).prettyName(),
+                                        positions: positions
+                                    });
+                                    $("#userOnlineItem").append(onlineUser);
                                 });
-                                var onlineUser = _.template("<div id='onlineUser-<%= id %>'><%= user %><ul><%= positions %></ul></div>", {
-                                    id: user.id,
-                                    user: window.app.models.projectUser.get(user.id).prettyName(),
-                                    positions: positions
-                                });
-                                $("#userOnlineItem").append(onlineUser);
-                            });
-                        }
-                    });
-                }
-            )
+                            }
+                        });
+                    }
+                )
+            }
         };
         refreshData();
         var interval = window.app.view.addInterval(refreshData, 5000);
@@ -370,7 +372,7 @@ var ProjectDashboardView = Backbone.View.extend({
             $("#lastcommandsitem").append(commandHistory.render().el);
         }
 
-        if(!window.app.status.currentProjectModel.get('blindMode')) {
+        if(!window.app.status.currentProjectModel.get('blindMode') && !window.app.status.user.model.get("guestByNow")) {
             commandCollection.fetch({
                 success: function (collection, response) {
                     commandCallback(collection, response); //fonctionne mais très bourrin de tout refaire à chaque fois...
@@ -403,7 +405,7 @@ var ProjectDashboardView = Backbone.View.extend({
                 ulContainer.append(action);
             });
         }
-        if(!window.app.status.currentProjectModel.get('blindMode')) {
+        if(!window.app.status.currentProjectModel.get('blindMode') && !window.app.status.user.model.get("guestByNow")) {
             commandCollection.fetch({
                 success: function (collection, response) {
                     commandCallback(collection, response); //fonctionne mais très bourrin de tout refaire à chaque fois...
