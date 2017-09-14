@@ -17,6 +17,7 @@ package be.cytomine.security
 */
 
 import be.cytomine.api.RestController
+import be.cytomine.project.Project
 import be.cytomine.utils.JSONUtils
 import grails.converters.JSON
 import grails.plugin.springsecurity.SpringSecurityUtils
@@ -343,6 +344,10 @@ class LoginController extends RestController {
             }
             storageService.initUserStorage(user)
 
+            //add access to all project
+            Project.list().each {
+                secUserService.addUserToProject(user, it, false)
+            }
         }
 
         SpringSecurityUtils.reauthenticate user.username, null
