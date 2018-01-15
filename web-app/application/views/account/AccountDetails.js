@@ -15,22 +15,15 @@
  */
 
 var AccountDetails = Backbone.View.extend({
-    initialize: function (options) {
-
-    },
-    events: {
-
-    },
     render: function () {
         var self = this;
-        require([
-            "text!application/templates/account/AccountDetails.tpl.html"
-        ],
+        require(["text!application/templates/account/AccountDetails.tpl.html"],
             function (tpl) {
                 self.doLayout(tpl);
             });
         return this;
     },
+
     editProfile: function () {
         var self = this;
         var user = new UserModel(this.model.toJSON());
@@ -48,6 +41,7 @@ var AccountDetails = Backbone.View.extend({
             }
         });
     },
+
     editPassword: function () {
         var user = new UserModel(this.model.toJSON());
         user.save({
@@ -56,38 +50,39 @@ var AccountDetails = Backbone.View.extend({
         }, {
             success: function (model, response) {
                 window.app.view.message("Success", response.message, "success");
-                $("#input_new_password").val("");
-                $("#input_new_password_confirm").val("");
-                $("#input_password").val("");
-                $("#input_password").closest(".form-group").removeClass("has-success");
-                $("#input_new_password").closest(".form-group").removeClass("has-success");
-                $("#input_new_password_confirm").closest(".form-group").removeClass("has-success");
+                var newPassword = $("#input_new_password");
+                var newPasswordConfirm = $("#input_new_password_confirm");
+                var password = $("#input_password");
+                password.val("").closest(".form-group").removeClass("has-success");
+                newPassword.val("").closest(".form-group").removeClass("has-success");
+                newPasswordConfirm.val("").closest(".form-group").removeClass("has-success");
                 $("#password_expired_alert").hide();
-                $("#input_password").closest('.form-group').show();
-                $("#input_new_password").attr("disabled", "disabled");
-                $("#input_new_password_confirm").attr("disabled", "disabled");
-
+                password.closest('.form-group').show();
+                newPassword.attr("disabled", "disabled");
+                newPasswordConfirm.attr("disabled", "disabled");
             },
             error: function (model, response) {
                 window.app.view.message("Error", response.message, "error");
             }
         });
     },
+
     validatePassword: function () {
         return $("#input_new_password").val() != "" &&
             $("#input_new_password_confirm").val() != "" &&
             ($("#input_new_password").val() == $("#input_new_password_confirm").val());
     },
+
     doLayout: function (tpl) {
         var self = this;
-        this.model.set({ host : window.location.host });
+        this.model.set({host: window.location.host});
 
-        if(window.app.status.user.model.attributes.adminByNow) {
-            this.model.set({ role : "admin" });
-        } else if(window.app.status.user.model.attributes.userByNow) {
-            this.model.set({ role : "user" });
-        } else if(window.app.status.user.model.attributes.guestByNow) {
-            this.model.set({ role : "guest" });
+        if (window.app.status.user.model.attributes.adminByNow) {
+            this.model.set({role: "admin"});
+        } else if (window.app.status.user.model.attributes.userByNow) {
+            this.model.set({role: "user"});
+        } else if (window.app.status.user.model.attributes.guestByNow) {
+            this.model.set({role: "guest"});
         }
 
         $(this.el).html(_.template(tpl, this.model.toJSON()));
@@ -105,18 +100,16 @@ var AccountDetails = Backbone.View.extend({
 
         $.ajax({
             type: "GET",
-            url: "/api/ldap/"+this.model.toJSON().username+"/user.json",
-            contentType:"application/json; charset=utf-8",
-            dataType:"json",
-            success: function(response) {
+            url: "/api/ldap/" + this.model.toJSON().username + "/user.json",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
                 self.isInLDAP = response.result;
-                if(self.isInLDAP) {
+                if (self.isInLDAP) {
                     $("#password_panel").remove();
                 }
             }
         });
-
-
 
 
         $("#input_new_password_confirm").keyup(function () {
@@ -133,7 +126,7 @@ var AccountDetails = Backbone.View.extend({
             } else {
                 /*$("#input_new_password_confirm").closest('.form-group').addClass("has-warning");
                  $("#input_new_password").closest('.form-group').addClass("has-warning");*/
-                 $("#submit_edit_password").attr("disabled", "disabled");
+                $("#submit_edit_password").attr("disabled", "disabled");
             }
         });
         $("#input_new_password").keyup(function () {
@@ -149,7 +142,7 @@ var AccountDetails = Backbone.View.extend({
             if (self.model.get("passwordExpired")) {
                 return;
             }
-            var data = { 'j_username': self.model.get('username'), 'j_password': newPassword};
+            var data = {'j_username': self.model.get('username'), 'j_password': newPassword};
             $.ajax({
                 url: 'j_spring_security_check',
                 type: 'post',
@@ -173,7 +166,7 @@ var AccountDetails = Backbone.View.extend({
         $("#edit_password_form").submit(function (e) {
             if (self.validatePassword()) {
                 // check if not ldap
-                if(!self.isInLDAP) {
+                if (!self.isInLDAP) {
                     self.editPassword();
                 } else {
                     window.app.view.message("Change Password", "You have been identified by LDAP. You can't change your password.", "error");

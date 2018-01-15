@@ -31,7 +31,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * Time: 8:33
  * A group of image with diff dimension
  */
-@RestApiObject(name = "image group", description = "A group of image from the same source with different dimension")
+@RestApiObject(name = "Image group", description = "A group of image from the same source with different dimension")
 class ImageGroup extends CytomineDomain implements Serializable {
 
     @RestApiObjectField(description = "The name of the project")

@@ -25,7 +25,7 @@ import org.restapidoc.annotation.RestApiObjectField
 /**
  * A group is a set of user
  */
-@RestApiObject(name = "group", description="A group is a set of users. A user may be in many groups")
+@RestApiObject(name = "Group", description="A group is a set of users. A user may be in many groups")
 class Group extends CytomineDomain {
 
     @RestApiObjectField(description="The group name")

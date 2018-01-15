@@ -188,6 +188,14 @@ div.olControlOverviewMapElement {
 
 }
 
+.dl-small dt {
+    width: 60px;
+}
+
+.dl-small dd {
+    margin-left: 80px;
+}
+
 
 div .sidebar-map {
     z-index: 800;

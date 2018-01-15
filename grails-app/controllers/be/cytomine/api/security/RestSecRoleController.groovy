@@ -27,7 +27,7 @@ import org.restapidoc.pojo.RestApiParamType
  * Controller for user roles
  * A user may have some roles (user, admin,...)
  */
-@RestApi(name = "sec role services", description = "Methods for managing user role")
+@RestApi(name = "Security | sec role services", description = "Methods for managing user role")
 class RestSecRoleController extends RestController {
 
     def secRoleService

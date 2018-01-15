@@ -19,6 +19,7 @@ package be.cytomine.security
 import be.cytomine.CytomineDomain
 import be.cytomine.Exception.AlreadyExistException
 import be.cytomine.Exception.WrongArgumentException
+import org.restapidoc.annotation.RestApiObject
 import org.restapidoc.annotation.RestApiObjectField
 import org.restapidoc.annotation.RestApiObjectFields
 
@@ -27,6 +28,7 @@ import org.restapidoc.annotation.RestApiObjectFields
  * Its the parent class for "user" (human) and "user job" (algo).
  */
 //@RestApiObject(name = "user")
+@RestApiObject(name="Sec user", description = "A secure user")
 class SecUser extends CytomineDomain implements Serializable {
 
     @RestApiObjectField(description = "The username of the user")

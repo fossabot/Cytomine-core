@@ -30,7 +30,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller for project default layer
  */
-@RestApi(name = "RestProjectDefaultLayerController", description = "Controller for project default layer")
+@RestApi(name = "Project | project default layer services", description = "Controller for project default layer")
 class RestProjectDefaultLayerController extends RestController {
 
     def projectDefaultLayerService

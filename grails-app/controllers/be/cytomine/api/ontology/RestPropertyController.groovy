@@ -32,7 +32,7 @@ import org.restapidoc.annotation.RestApiParam
 import org.restapidoc.annotation.RestApiParams
 import org.restapidoc.pojo.RestApiParamType
 
-@RestApi(name = "property services", description = "Methods for managing properties")
+@RestApi(name = "Ontology | property services", description = "Methods for managing properties")
 class RestPropertyController extends RestController {
 
     def propertyService

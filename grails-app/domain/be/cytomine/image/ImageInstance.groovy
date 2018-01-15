@@ -35,7 +35,7 @@ import org.restapidoc.annotation.RestApiObjectFields
  * Time: 8:33
  * An ImageInstance is an image map with a project
  */
-@RestApiObject(name = "image instance", description = "A link between 'abstract image' and 'project'. An 'abstract image' may be in multiple projects.")
+@RestApiObject(name = "Image instance", description = "A link between 'abstract image' and 'project'. An 'abstract image' may be in multiple projects.")
 class ImageInstance extends CytomineDomain implements Serializable {
 
     @RestApiObjectField(description = "The image linked to the project")

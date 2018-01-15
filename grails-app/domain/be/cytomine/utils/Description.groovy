@@ -24,7 +24,7 @@ import org.restapidoc.annotation.RestApiObjectField
 /**
  * A domain description (text, image,...)
  */
-@RestApiObject(name = "description", description = "A domain description (text, image,...).")
+@RestApiObject(name = "Description", description = "A domain description (text, image,...).")
 class Description extends CytomineDomain implements Serializable {
 
     /**

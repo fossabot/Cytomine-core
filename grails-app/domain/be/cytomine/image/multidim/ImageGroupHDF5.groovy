@@ -25,14 +25,26 @@ import org.restapidoc.annotation.RestApiObjectField
 /**
  * Created by laurent on 06.02.17.
  */
-@RestApiObject(name = "image hdf5 group", description = "A group of image from the same source with different dimension and hdf5 support")
+@RestApiObject(name = "Image Group HDF5", description = "A group of images from the same source with different dimension and HDF5 support")
 
 class ImageGroupHDF5  extends CytomineDomain implements  Serializable {
 
-   ImageGroup group
+    public static int NOTLAUNCH = 0
+    public static int RUNNING = 2
+    public static int SUCCESS = 3
+    public static int FAILED = 4
 
-    @RestApiObjectField(description = "The HDF5 filenames for the whole multidim  image")
-    String filenames
+    @RestApiObjectField(description = "The image group")
+    ImageGroup group
+
+    @RestApiObjectField(description = "The filename for the HDF5 file")
+    String filename
+
+    @RestApiObjectField(description = "The conversion progression (from 0 to 100)", mandatory = false)
+    int progress = 0
+
+    @RestApiObjectField(description = "The conversion status (NOTLAUNCH = 0, RUNNING = 1, SUCCESS = 2, FAILED = 3)", mandatory = false)
+    int status = 0
 
     static mapping = {
         id generator: "assigned"
@@ -40,9 +52,10 @@ class ImageGroupHDF5  extends CytomineDomain implements  Serializable {
     }
 
     static constraints = {
-        filenames nullable: false
+        filename nullable: false
+        progress(min: 0, max: 100)
+        status(range:0..4)
     }
-
 
     /**
      * Check if this domain will cause unique constraint fail if saving on database
@@ -51,7 +64,7 @@ class ImageGroupHDF5  extends CytomineDomain implements  Serializable {
         ImageGroupHDF5.withNewSession {
             ImageGroupHDF5 imageAlreadyExist = ImageGroupHDF5.findByGroup(group)
             if (imageAlreadyExist != null && (imageAlreadyExist.id != id)) {
-                throw new AlreadyExistException("I")
+                throw new AlreadyExistException("ImageGroupHDF5 with group $group already exists")
             }
         }
     }
@@ -64,10 +77,10 @@ class ImageGroupHDF5  extends CytomineDomain implements  Serializable {
      */
     static ImageGroupHDF5 insertDataIntoDomain(def json, def domain = new ImageGroupHDF5()) {
         domain.group = JSONUtils.getJSONAttrDomain(json, "group", new ImageGroup(), true)
-        domain.filenames = JSONUtils.getJSONAttrStr(json, "filenames")
-
-
-        return domain;
+        domain.filename = JSONUtils.getJSONAttrStr(json, "filename")
+        domain.progress = JSONUtils.getJSONAttrInteger(json, "progress", 0)
+        domain.status = JSONUtils.getJSONAttrInteger(json, "status", 0)
+        return domain
     }
 
     /**
@@ -78,13 +91,13 @@ class ImageGroupHDF5  extends CytomineDomain implements  Serializable {
     static def getDataFromDomain(def domain) {
         def returnArray = CytomineDomain.getDataFromDomain(domain)
         returnArray['group'] = domain?.group?.id
-        returnArray['filenames'] = domain?.filenames
+        returnArray['filename'] = domain?.filename
+        returnArray['progress'] = domain?.progress
+        returnArray['status'] = domain?.status
         return returnArray
     }
 
-
     public CytomineDomain container() {
-        return group.container();
+        return group.container()
     }
-
 }

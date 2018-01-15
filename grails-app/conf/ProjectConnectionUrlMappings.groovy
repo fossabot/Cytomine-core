@@ -27,10 +27,10 @@ class ProjectConnectionUrlMappings {
             action = [GET: "lastConnectionInProject"]
         }
         "/api/project/$project/lastConnection/$user.$format"(controller: "restProjectConnection") {
-            action = [GET: "lastConnectionInProject"]
+            action = [GET: "lastConnectionInProjectByUser"]
         }
         "/api/project/$project/connectionFrequency.$format"(controller: "restProjectConnection") {
-            action = [GET: "numberOfConnectionsByProjectAndUser"]
+            action = [GET: "numberOfConnectionsByProject"]
         }
         "/api/project/$project/connectionFrequency/$user.$format"(controller: "restProjectConnection") {
             action = [GET: "numberOfConnectionsByProjectAndUser"]

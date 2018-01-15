@@ -27,7 +27,7 @@ import org.restapidoc.annotation.RestApiObjectFields
  * A job parameter is an instance of software parameter
  * When a job is created, we create a job parameter for each software parameter.
  */
-@RestApiObject(name = "job parameter", description = "A job parameter is an instance of software parameter. When a job is created, we create a job parameter for each software parameter.")
+@RestApiObject(name = "Job parameter", description = "A job parameter is an instance of software parameter. When a job is created, we create a job parameter for each software parameter.")
 class JobParameter extends CytomineDomain implements Comparable {
 
     /**

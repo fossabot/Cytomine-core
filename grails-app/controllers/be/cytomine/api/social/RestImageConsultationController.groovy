@@ -18,21 +18,24 @@ package be.cytomine.api.social
 import be.cytomine.project.Project
 import be.cytomine.Exception.CytomineException
 import be.cytomine.api.RestController
+import org.restapidoc.annotation.RestApi
+import org.restapidoc.annotation.RestApiMethod
+import org.restapidoc.annotation.RestApiParam
+import org.restapidoc.annotation.RestApiParams
+import org.restapidoc.pojo.RestApiParamType
 
 import java.text.SimpleDateFormat
 
 
-/**
- * Controller for user position
- * Position of the user (x,y) on an image for a time
- */
+@RestApi(name="Social | image consultation services", description="Methods to manage the consultation records of an image by a user")
 class RestImageConsultationController extends RestController {
 
     def projectService
     def imageConsultationService
     def exportService
 
-    def add = {
+    @RestApiMethod(description = "Add a new image consultation record")
+    def add() {
         try {
             responseSuccess(imageConsultationService.add(request.JSON))
         } catch (CytomineException e) {
@@ -41,12 +44,22 @@ class RestImageConsultationController extends RestController {
         }
     }
 
-    def lastImageOfUsersByProject = {
+    @RestApiMethod(description = "List the last consulted image by each user for a given project")
+    @RestApiParams(params=[
+            @RestApiParam(name="project", type="long", paramType = RestApiParamType.PATH, description = "The project id")
+    ])
+    def lastImageOfUsersByProject() {
         Project project = projectService.read(params.project)
         responseSuccess(imageConsultationService.lastImageOfUsersByProject(project))
     }
 
-    def resumeByUserAndProject = {
+    @RestApiMethod(description = "Summarize the consulted images for a given user and a given project")
+    @RestApiParams(params=[
+            @RestApiParam(name="user", type="long", paramType = RestApiParamType.QUERY, description = "The user id", required=true),
+            @RestApiParam(name="project", type="long", paramType = RestApiParamType.QUERY, description = "The project id", required=true),
+            @RestApiParam(name="export", type="string", paramType = RestApiParamType.QUERY, description = "The export format (supported: csv). Otherwise, return a json", required=false),
+    ])
+    def resumeByUserAndProject() {
         def result = imageConsultationService.resumeByUserAndProject(Long.parseLong(params.user), Long.parseLong(params.project))
 
         if(params.export.equals("csv")) {

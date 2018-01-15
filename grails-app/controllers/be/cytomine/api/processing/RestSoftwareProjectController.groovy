@@ -30,7 +30,7 @@ import org.restapidoc.pojo.RestApiParamType
  * Controller for software project link
  * A software may be used by some project
  */
-@RestApi(name = "software project services", description = "Methods for managing software, application that can be launch (job)")
+@RestApi(name = "Processing | software project services", description = "Methods for managing software, application that can be launch (job)")
 class RestSoftwareProjectController extends RestController{
 
     def softwareProjectService

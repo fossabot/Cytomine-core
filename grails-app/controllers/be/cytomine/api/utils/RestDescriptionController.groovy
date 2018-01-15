@@ -27,7 +27,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller for a description (big text data/with html format) on a specific domain
  */
-@RestApi(name = "description services", description = "Methods for managing description on a specific domain")
+@RestApi(name = "Utils | description services", description = "Methods for managing description on a specific domain")
 class RestDescriptionController extends RestController {
 
     def springSecurityService

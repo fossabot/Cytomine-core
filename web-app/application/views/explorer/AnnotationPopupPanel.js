@@ -245,10 +245,8 @@ var AnnotationPopupPanel = SideBarPanel.extend({
                 var modal = new CustomModal({
                     idModal : "myModalRetrieval"+annotation.id,
                     button : $('#openRetrievalModal'+annotation.id),
-                    header :"Retrieval",
-                    body :template,
-                    width : 900,
-                    height : 800
+                    header :"Retrieval - Annotation similarity",
+                    body :template
                 });
                 modal.addButtons("closeRetrieval","Close",true,true);
 

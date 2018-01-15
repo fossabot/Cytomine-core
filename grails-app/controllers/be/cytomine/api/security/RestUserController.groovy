@@ -36,7 +36,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Handle HTTP Requests for CRUD operations on the User domain class.
  */
-@RestApi(name = "user services", description = "Methods for managing a user role")
+@RestApi(name = "Security | user services", description = "Methods for managing a user")
 class RestUserController extends RestController {
 
     def springSecurityService

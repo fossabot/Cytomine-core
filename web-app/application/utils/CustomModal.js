@@ -27,44 +27,41 @@ var CustomModal = Backbone.View.extend({
         this.callBack = options.callBack;
         this.callBackAfterCreation = options.callBackAfterCreation;
         this.registerModal();
-        //style="width: ' + (width - 100) + 'px;height: ' + (height - 100) + 'px;"
-        this.width = options.width;
-        this.height = options.height;
     },
+
+
     addButtons: function (id, text, primary, close, callBack) {
-        this.buttons.push({id: id, text: text, close: (close ? 'modal' : ''), primaryClass: (primary ? 'btn-primary' : ''), callBack: callBack});
+        this.buttons.push({
+            id: id,
+            text: text,
+            close: (close ? 'modal' : ''),
+            primaryClass: (primary ? 'btn-primary' : ''),
+            callBack: callBack
+        });
     },
+
+
     registerModal: function () {
         var self = this;
 
         this.render = function () {
-
-            require([
-                    "text!application/templates/utils/CustomModal.tpl.html"
-                ],
+            require([ "text!application/templates/utils/CustomModal.tpl.html"],
                 function (tplModal) {
-
                     var modal = $("#modals");
                     modal.empty();
 
-                    var htmlModal = _.template(tplModal,{
-                        id : self.idModal,
-                        header : self.header,
-                        body : self.body,
-                        swide : (self.swide ? "modal-swide" : ""),
-                        wide : (self.wide ? "modal-wide" : ""),
-                        xwide : (self.xwide ? "modal-xwide" : ""),
-                        buttons : self.buttons
+                    var htmlModal = _.template(tplModal, {
+                        id: self.idModal,
+                        header: self.header,
+                        body: self.body,
+                        swide: (self.swide ? "modal-swide" : ""),
+                        wide: (self.wide ? "modal-wide" : ""),
+                        xwide: (self.xwide ? "modal-xwide" : ""),
+                        buttons: self.buttons
                     });
 
                     modal.append(htmlModal);
 
-                    if(self.width) {
-                        $('#'+self.idModal).css("width",self.width);
-                    }
-                    if(self.height) {
-                        $('#'+self.idModal).css("height",self.height);
-                    }
                     _.each(self.buttons, function (b) {
                         $("#" + b.id).click(function () {
                             if (b.callBack) {
@@ -77,21 +74,25 @@ var CustomModal = Backbone.View.extend({
                     if (self.callBack) {
                         self.callBack();
                     }
+
                     if (self.callBackAfterCreation) {
                         self.callBackAfterCreation();
                     }
-
                 });
             return true;
         };
-        if(self.button) {
+
+        if (self.button) {
             //when click on button to open modal, build modal html, append to doc and open modal
             self.button.unbind();
-            self.button.click(function(evt) {
+            self.button.click(function (evt) {
                 self.render();
             });
-        }// else, the owner must call render() by its own.
+        }
+        // else, the owner must call render() by its own.
     },
+
+
     close: function () {
         $('#' + this.idModal).modal('hide');
         //$('body').removeClass('modal-open');
@@ -116,7 +117,7 @@ var DescriptionModal = {
             message = "";
         }
 
-        var callBackAfterCreation = function() {
+        var callBackAfterCreation = function () {
 
             if (window.app.status.currentProjectModel.isReadOnly(window.app.models.projectAdmin)) {
                 $("#saveDescription" + idDescription).hide();
@@ -124,7 +125,7 @@ var DescriptionModal = {
 
 
             $('.modal-header button').after('<span class="resize-button" aria-hidden="true"><i class="glyphicon glyphicon-resize-full"/></span>');
-            $('.modal-header span').on("click", ".glyphicon-resize-full", function(e) {
+            $('.modal-header span').on("click", ".glyphicon-resize-full", function (e) {
                 $(this).toggleClass('glyphicon-resize-full');
                 $(this).toggleClass('glyphicon-resize-small');
                 //as we don't set width and height for the description modal, it takes these parameters of this parents. So I change these.
@@ -133,12 +134,12 @@ var DescriptionModal = {
                     'max-width': '90%'
                 });
                 $('iframe').parent().css({
-                    'height': function( index, value ) {
-                        return parseFloat( value ) * 1.5;
+                    'height': function (index, value) {
+                        return parseFloat(value) * 1.5;
                     }
                 });
             });
-            $('.modal-header span').on("click", ".glyphicon-resize-small", function(e) {
+            $('.modal-header span').on("click", ".glyphicon-resize-small", function (e) {
                 $(this).toggleClass('glyphicon-resize-full');
                 $(this).toggleClass('glyphicon-resize-small');
                 $('.modal-dialog').css({
@@ -146,8 +147,8 @@ var DescriptionModal = {
                     'max-width': '60%'
                 });
                 $('iframe').parent().css({
-                    'height': function( index, value ) {
-                        return parseFloat( value ) / 1.5;
+                    'height': function (index, value) {
+                        return parseFloat(value) / 1.5;
                     }
                 });
             });
@@ -155,7 +156,7 @@ var DescriptionModal = {
 
 
         var modal = new CustomModal({
-            idModal: "descriptionModal"+ (editable ? "" : "Preview")+ domainIdent,
+            idModal: "descriptionModal" + (editable ? "" : "Preview") + domainIdent,
             button: button,
             header: "Description",
             body: message + '<div id="description' + domainIdent + '"><textarea style="width: ' + (width - 100) + 'px;height: ' + (height - 100) + 'px;" id="descriptionArea' + domainIdent + '" placeholder="Enter text ...">' + text + '</textarea></div>',
@@ -168,7 +169,7 @@ var DescriptionModal = {
                     serverPath: '/api/attachedfileRTEditor.json?domainClassName=' + domainClassName + "&domainIdent=" + domainIdent,
                     fileFieldName: 'image',
                     urlPropertyName: 'url',
-                    statusPropertyName:'id' // hack. in the success callback, the plugin looks for a field only present in case of success ...
+                    statusPropertyName: 'id' // hack. in the success callback, the plugin looks for a field only present in case of success ...
                 };
 
                 rte.trumbowyg({
@@ -216,24 +217,30 @@ var DescriptionModal = {
                     // remove the host url for images
 
                     text = rte.trumbowyg('html').split(window.location.protocol + "//" + window.location.host + '/api/attachedfile').join('/api/attachedfile');
-                    new DescriptionModel({id: idDescription, domainIdent: domainIdent, domainClassName: domainClassName}).save({
+                    new DescriptionModel({
+                        id: idDescription,
+                        domainIdent: domainIdent,
+                        domainClassName: domainClassName
+                    }).save({
                         domainIdent: domainIdent,
                         domainClassName: domainClassName,
                         data: text
-                    }, {success: function (termModel, response) {
+                    }, {
+                        success: function (termModel, response) {
 
-                        if (callback) {
-                            callback();
+                            if (callback) {
+                                callback();
+                            }
+                        }, error: function (model, response) {
+                            var json = $.parseJSON(response.responseText);
+                            window.app.view.message("Auth error", "error:" + json.errors, "");
                         }
-                    }, error: function (model, response) {
-                        var json = $.parseJSON(response.responseText);
-                        window.app.view.message("Auth error", "error:" + json.errors, "");
-                    }});
+                    });
 
                 });
 
             },
-            callBackAfterCreation : callBackAfterCreation
+            callBackAfterCreation: callBackAfterCreation
         });
 
         modal.addButtons("saveDescription" + idDescription, "Save", true, true);
@@ -242,10 +249,11 @@ var DescriptionModal = {
     initDescriptionView: function (domainIdent, domainClassName, isOwner, container, maxPreviewCharNumber, callbackGet, callbackUpdate) {
         var self = this;
         self.editable = !window.app.status.currentProjectModel.isReadOnly(window.app.models.projectAdmin);
-        if(self.editable && window.app.status.currentProjectModel.get('isRestricted')) self.editable = isOwner;
+        if (self.editable && window.app.status.currentProjectModel.get('isRestricted')) self.editable = isOwner;
 
         new DescriptionModel({domainIdent: domainIdent, domainClassName: domainClassName}).fetch(
-                {success: function (description, response) {
+            {
+                success: function (description, response) {
                     container.empty();
                     var text = description.get('data');
                     text = text.split('STOP_PREVIEW')[0];
@@ -255,7 +263,7 @@ var DescriptionModal = {
                     }
                     container.append(text);
                     container.append(' <a href="#descriptionModalPreview' + domainIdent + '" role="button" class="descriptionPreview" data-toggle="modal"> See full text </a>');
-                    if(self.editable) {
+                    if (self.editable) {
                         container.append('or <a href="#descriptionModal' + domainIdent + '" role="button" class="description" data-toggle="modal"> edit </a>');
                     }
                     callbackGet();
@@ -263,21 +271,22 @@ var DescriptionModal = {
                     // initPreview modal
                     self.initDescriptionModal(container, description.id, domainIdent, domainClassName, description.get('data'), false, container.find("a.descriptionPreview"), callbackUpdate);
                     // if editable init the second modal for edition
-                    if(self.editable) {
+                    if (self.editable) {
                         self.initDescriptionModal(container, description.id, domainIdent, domainClassName, description.get('data'), self.editable, container.find("a.description"), callbackUpdate);
                     }
                 }, error: function (model, response) {
-                    container.empty();
-                    var html = "No description yet";
-                    if(self.editable) {
-                        html = ' <a href="#descriptionModal' + domainIdent + '" role="button" class="description" data-toggle="modal">Add description</a>';
-                    }
-                    container.append(html);
-                    if(self.editable) {
-                        self.initDescriptionModal(container, null, domainIdent, domainClassName, "", self.editable, container.find("a.description"), callbackUpdate);
-                    }
+                container.empty();
+                var html = "No description yet";
+                if (self.editable) {
+                    html = ' <a href="#descriptionModal' + domainIdent + '" role="button" class="description" data-toggle="modal">Add description</a>';
+                }
+                container.append(html);
+                if (self.editable) {
+                    self.initDescriptionModal(container, null, domainIdent, domainClassName, "", self.editable, container.find("a.description"), callbackUpdate);
+                }
 
-                }});
+            }
+            });
 
     }
 };
@@ -286,8 +295,6 @@ var DescriptionModal = {
 var ImportAnnotationModal = {
 
     initImportAnnotationModal: function (container, idImage, callback) {
-        var width = Math.round($(window).width() * 0.75);
-        var height = Math.round($(window).height() * 0.75);
 
 
         var modal = new CustomModal({
@@ -296,12 +303,10 @@ var ImportAnnotationModal = {
             button: container.find("a.importannotation"),
             header: "Import Annotation Layer",
             body: '<div id="importLayer' + idImage + '">Import Annotation allow you to get annotations (terms, descriptions, properties) from an image from another project. ' +
-                    '<br/>The image must be the same image, in an other project. You can only import annotation from layer (user) with at least 1 annotation and layer that are in the current project.<br/><br/>  <div id="layersSelection' + idImage + '"><div class="alert alert-info"><i class="icon-refresh"/> Loading...</div></div></div>',
-            width: width,
-            height: height,
+            '<br/>The image must be the same image, in an other project. You can only import annotation from layer (user) with at least 1 annotation and layer that are in the current project.<br/><br/>  <div id="layersSelection' + idImage + '"><div class="alert alert-info"><i class="icon-refresh"/> Loading...</div></div></div>',
             callBack: function () {
 
-                $.get("/api/imageinstance/" + idImage + "/sameimagedata.json",function (data) {
+                $.get("/api/imageinstance/" + idImage + "/sameimagedata.json", function (data) {
                     $("#layersSelection" + idImage).empty();
                     if (data.collection.length === 0) {
                         $("#layersSelection" + idImage).append("This image has no other layers in other projects.");
@@ -314,9 +319,9 @@ var ImportAnnotationModal = {
                         });
                     }
                 }).fail(function (json) {
-                            window.app.view.message("Import data", json.responseJSON.errors, "error", 5000);
-                            $("#closeImportLayer" + idImage).click();
-                        });
+                    window.app.view.message("Import data", json.responseJSON.errors, "error", 5000);
+                    $("#closeImportLayer" + idImage).click();
+                });
 
                 $("#importLayersButton" + idImage).click(function (e) {
 
@@ -331,26 +336,26 @@ var ImportAnnotationModal = {
                     var giveMe = $("#giveMeAnnotations").is(':checked');
                     $("#layersSelection" + idImage).empty();
                     new TaskModel({project: window.app.status.currentProject}).save({}, {
-                                success: function (task, response) {
-                                    console.log(response.task);
-                                    $("#layersSelection" + idImage).append('<div id="task-' + response.task.id + '"></div>');
-                                    var timer = window.app.view.printTaskEvolution(response.task, $("#layersSelection" + idImage).find("#task-" + response.task.id), 2000);
+                            success: function (task, response) {
+                                console.log(response.task);
+                                $("#layersSelection" + idImage).append('<div id="task-' + response.task.id + '"></div>');
+                                var timer = window.app.view.printTaskEvolution(response.task, $("#layersSelection" + idImage).find("#task-" + response.task.id), 2000);
 
 
-                                    $.post("/api/imageinstance/" + idImage + "/copyimagedata.json?task=" + response.task.id + "&layers=" + layers.join(",") + "&giveMe=" + giveMe,function (data) {
-                                        clearInterval(timer);
-                                        $("#closeImportLayer" + idImage).show();
-                                        $("#closeImportLayer" + idImage).click();
-                                    }).fail(function (json) {
-                                                clearInterval(timer);
-                                                window.app.view.message("Import data", json.errors, "error");
-                                            });
-                                },
-                                error: function (model, response) {
-                                    var json = $.parseJSON(response.responseText);
-                                    window.app.view.message("Task", json.errors, "error");
-                                }
+                                $.post("/api/imageinstance/" + idImage + "/copyimagedata.json?task=" + response.task.id + "&layers=" + layers.join(",") + "&giveMe=" + giveMe, function (data) {
+                                    clearInterval(timer);
+                                    $("#closeImportLayer" + idImage).show();
+                                    $("#closeImportLayer" + idImage).click();
+                                }).fail(function (json) {
+                                    clearInterval(timer);
+                                    window.app.view.message("Import data", json.errors, "error");
+                                });
+                            },
+                            error: function (model, response) {
+                                var json = $.parseJSON(response.responseText);
+                                window.app.view.message("Task", json.errors, "error");
                             }
+                        }
                     );
                 });
 
@@ -366,21 +371,15 @@ var ImportAnnotationModal = {
 var copyImageModal = {
 
     initCopyImageModal: function (container, idImage, idProject, idBaseImage, callback) {
-        var width = Math.round($(window).width() * 0.75);
-        var height = Math.round($(window).height() * 0.75);
-
-
         var modal = new CustomModal({
 
             idModal: "copyImageModal" + idImage,
             button: container.find("a.copyimage"),
             header: "Copy image to another project",
             body: '<div id="importLayer' + idImage + '">Copy image allow you to copy an image to another project. It can copy image data (description, annotations,...).' +
-                    '<br/>You can only import annotation from layer (user) with at least 1 annotation. Layer must be in project dest and project source!<br/><br/>  ' +
-                    '<div id="projectSelection' + idImage + '"><div class="alert alert-info"><i class="icon-refresh"/> Loading...</div></div>' +
-                    '<div id="layersSelection' + idImage + '"></div></div>',
-            width: width,
-            height: height,
+            '<br/>You can only import annotation from layer (user) with at least 1 annotation. Layer must be in project dest and project source!<br/><br/>  ' +
+            '<div id="projectSelection' + idImage + '"><div class="alert alert-info"><i class="icon-refresh"/> Loading...</div></div>' +
+            '<div id="layersSelection' + idImage + '"></div></div>',
             callBack: function () {
                 var modal = $("#importLayer" + idImage);
                 $("#importLayersButton" + idImage).hide();
@@ -396,18 +395,21 @@ var copyImageModal = {
                         });
 
                         modal.find(".copytoproject").click(function () {
-                             $("#layersSelection" + idImage).append('<br><div class="alert alert-info"><i class="icon-refresh"/> Loading...Please wait...</div>');
+                            $("#layersSelection" + idImage).append('<br><div class="alert alert-info"><i class="icon-refresh"/> Loading...Please wait...</div>');
                             $("#closeImportLayer" + idImage).hide();
-                            new ImageInstanceModel({}).save({project: modal.find("#projectSelection" + idImage).find("select").val(), user: null, baseImage: idBaseImage}, {
+                            new ImageInstanceModel({}).save({
+                                project: modal.find("#projectSelection" + idImage).find("select").val(),
+                                user: null,
+                                baseImage: idBaseImage
+                            }, {
                                 success: function (image, response) {
-
 
 
                                     var newImageId = image.get('imageinstance').id;
 
-                                    $.post("/api/imageinstance/" + newImageId + "/copymetadata.json?based=" + idImage,function (data) {
+                                    $.post("/api/imageinstance/" + newImageId + "/copymetadata.json?based=" + idImage, function (data) {
 
-                                        $.get("/api/imageinstance/" + newImageId + "/sameimagedata.json?project=" + idProject,function (data) {
+                                        $.get("/api/imageinstance/" + newImageId + "/sameimagedata.json?project=" + idProject, function (data) {
                                             $("#layersSelection" + idImage).empty();
                                             $("#layersSelection" + idImage).append('<br><div class="alert alert-info">The image is now in the selected project. You can now import layer data (annotations):</div>');
 
@@ -419,7 +421,6 @@ var copyImageModal = {
                                                 $("#importLayersButton" + idImage).show();
 
 
-
                                                 $("#layersSelection" + idImage).append('<input type="checkbox" id="giveMeAnnotations"> Copy all annotations on my layer (if not checked, annotation will stay on the same layers) </input><br/><br/><br/> ');
                                                 _.each(data.collection, function (item) {
                                                     var layer = item.image + "_" + item.user;
@@ -428,9 +429,9 @@ var copyImageModal = {
                                                 });
                                             }
                                         }).fail(function (json) {
-                                                    window.app.view.message("Import data", json.responseJSON.errors, "error", 5000);
-                                                    $("#closeImportLayer" + idImage).click();
-                                                });
+                                            window.app.view.message("Import data", json.responseJSON.errors, "error", 5000);
+                                            $("#closeImportLayer" + idImage).click();
+                                        });
 
 
                                         $("#importLayersButton" + idImage).click(function (e) {
@@ -446,35 +447,35 @@ var copyImageModal = {
                                             var giveMe = $("#giveMeAnnotations").is(':checked');
                                             $("#layersSelection" + idImage).empty();
                                             new TaskModel({project: window.app.status.currentProject}).save({}, {
-                                                        success: function (task, response) {
-                                                            console.log(response.task);
-                                                            $("#layersSelection" + idImage).append('<div id="task-' + response.task.id + '"></div>');
-                                                            var timer = window.app.view.printTaskEvolution(response.task, $("#layersSelection" + idImage).find("#task-" + response.task.id), 2000);
+                                                    success: function (task, response) {
+                                                        console.log(response.task);
+                                                        $("#layersSelection" + idImage).append('<div id="task-' + response.task.id + '"></div>');
+                                                        var timer = window.app.view.printTaskEvolution(response.task, $("#layersSelection" + idImage).find("#task-" + response.task.id), 2000);
 
 
-                                                            $.post("/api/imageinstance/" + newImageId + "/copyimagedata.json?task=" + response.task.id + "&layers=" + layers.join(",") + "&giveMe=" + giveMe,function (data) {
-                                                                clearInterval(timer);
-                                                                window.app.view.message("Copy","Image copy success", "success");
-                                                                $("#closeImportLayer" + idImage).show();
-                                                                $("#closeImportLayer" + idImage).click();
-                                                            }).fail(function (json) {
+                                                        $.post("/api/imageinstance/" + newImageId + "/copyimagedata.json?task=" + response.task.id + "&layers=" + layers.join(",") + "&giveMe=" + giveMe, function (data) {
+                                                            clearInterval(timer);
+                                                            window.app.view.message("Copy", "Image copy success", "success");
+                                                            $("#closeImportLayer" + idImage).show();
+                                                            $("#closeImportLayer" + idImage).click();
+                                                        }).fail(function (json) {
 
-                                                                        clearInterval(timer);
-                                                                        window.app.view.message("Import data", json.errors, "error");
-                                                                    });
-                                                        },
-                                                        error: function (model, response) {
-                                                            var json = $.parseJSON(response.responseText);
-                                                            window.app.view.message("Task", json.errors, "error");
-                                                        }
+                                                            clearInterval(timer);
+                                                            window.app.view.message("Import data", json.errors, "error");
+                                                        });
+                                                    },
+                                                    error: function (model, response) {
+                                                        var json = $.parseJSON(response.responseText);
+                                                        window.app.view.message("Task", json.errors, "error");
                                                     }
+                                                }
                                             );
                                         });
 
 
                                     }).fail(function (json) {
-                                                window.app.view.message("Import data", json.errors, "error");
-                                            });
+                                        window.app.view.message("Import data", json.errors, "error");
+                                    });
 
                                 },
                                 error: function (model, response) {
@@ -485,7 +486,8 @@ var copyImageModal = {
                             });
 
                         });
-                    }});
+                    }
+                });
 
 
             }
@@ -501,13 +503,12 @@ var UpdateTextFiedsModal = {
     initUpdateTextFiedsModal: function (id, type, title, text, values, callback) {
 
         // create a text with a loop on tab [{field, nom, value}]
-        var body = '<p>'+text+'</p>';
-        for(var i=0;i<values.length;i++){
+        var body = '<p>' + text + '</p>';
+        for (var i = 0; i < values.length; i++) {
             body = body + '<br/>';
-            body = body + '<div class="row"><div class="col-md-3 col-md-offset-1"> '+values[i].name +'</div>';
-            body = body + '<div class="col-md-7"><input type="text" class="form-control" id="'+values[i].field + id +'" value="'+values[i].value+'"></div></div>';
+            body = body + '<div class="row"><div class="col-md-3 col-md-offset-1"> ' + values[i].name + '</div>';
+            body = body + '<div class="col-md-7"><input type="text" class="form-control" id="' + values[i].field + id + '" value="' + values[i].value + '"></div></div>';
         }
-
 
 
         var modal = new CustomModal({
@@ -518,9 +519,9 @@ var UpdateTextFiedsModal = {
         });
 
         // here the callback returns the values to update.
-        modal.addButtons("UpdateFields" + id, "Save", true, true, function(){
-            for(var i=0;i<values.length;i++){
-                values[i].value = $('#'+values[i].field + id)[0].value;
+        modal.addButtons("UpdateFields" + id, "Save", true, true, function () {
+            for (var i = 0; i < values.length; i++) {
+                values[i].value = $('#' + values[i].field + id)[0].value;
             }
 
             callback(values);
@@ -544,17 +545,17 @@ var DialogModal = {
         }
         var body;
         var header;
-        if(level == 'WARNING' || level == 'CONFIRMATIONWARNING'){
+        if (level == 'WARNING' || level == 'CONFIRMATIONWARNING') {
             body = '<div class="alert alert-warning">';
             header = "Be careful !";
-        } else if(level == 'INFO'){
+        } else if (level == 'INFO') {
             body = '<div class="alert alert-info">';
             header = "Information";
         } else {
             body = '<div class="alert alert-danger">';
             header = "Error";
         }
-        body = body + '<div id="'+ type +'DialogBox' + id + '">' + text + '</div></div>';
+        body = body + '<div id="' + type + 'DialogBox' + id + '">' + text + '</div></div>';
 
         var modal = new CustomModal({
             idModal: type + "DialogModal" + id,
@@ -562,7 +563,7 @@ var DialogModal = {
             body: body,
             swide: true
         });
-        if(level == 'CONFIRMATIONWARNING'){
+        if (level == 'CONFIRMATIONWARNING') {
             modal.addButtons("DialogBoxYesButton", "Yes", false, true, callbackYes);
             modal.addButtons("DialogBoxNoButton", "No", true, true, callbackNo);
         } else {

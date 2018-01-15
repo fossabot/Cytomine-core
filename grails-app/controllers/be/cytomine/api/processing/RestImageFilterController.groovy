@@ -28,7 +28,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller for image filter, filter that can be apply to a picture
  */
-@RestApi(name = "image filter services", description = "Methods for managing image filter, filter that can be apply to a picture")
+@RestApi(name = "Processing | image filter services", description = "Methods for managing image filter, filter that can be apply to a picture")
 class RestImageFilterController extends RestController {
 
     def imageFilterService

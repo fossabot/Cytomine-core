@@ -28,7 +28,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller for annotation created by user
  */
-@RestApi(name = "roi annotation services", description = "Methods for managing an region of interest annotation")
+@RestApi(name = "Processing | roi annotation services", description = "Methods for managing an region of interest annotation")
 class RestRoiAnnotationController extends RestController {
 
     def roiAnnotationService

@@ -305,9 +305,7 @@ var ProjectDashboardView = Backbone.View.extend({
                       idModal : "clearjobdataModal",
                       button : $("#clearjobdata"),
                       header :"Clear unused data",
-                      body :'<div class="col-md-3" id="jobDataClear'+self.model.id+'" style="min-width: 600px;">This will drop all data from job that are not reviewed. Are you sure? </div>',
-                      width : 700,
-                      height : 200
+                      body :'<div class="col-md-3" id="jobDataClear'+self.model.id+'" style="min-width: 600px;">This will drop all data from job that are not reviewed. Are you sure? </div>'
           });
          modal.addButtons("dropAllData","Drop all data",true,false,dropAllDataView);
          modal.addButtons("closeHotKeys","Close",false,true);

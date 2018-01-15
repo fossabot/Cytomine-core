@@ -33,7 +33,7 @@ import org.restapidoc.annotation.RestApiObjectFields
 /**
  * A ROI on the image, usefull to run a job on this area
  */
-@RestApiObject(name = "roi annotation", description = "An region of interest on a picture")
+@RestApiObject(name = "ROI annotation", description = "A region of interest on a picture")
 class RoiAnnotation extends AnnotationDomain implements Serializable {
 
     @RestApiObjectField(description = "User id that created this annotation")

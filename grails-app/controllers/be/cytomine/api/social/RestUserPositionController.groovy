@@ -32,7 +32,7 @@ import org.restapidoc.pojo.RestApiParamType
  * Controller for user position
  * Position of the user (x,y) on an image for a time
  */
-@RestApi(name = "user position services", description = "Methods for managing user positions in an image")
+@RestApi(name = "Social| user position services", description = "Methods for managing user positions in an image")
 class RestUserPositionController extends RestController {
 
     def cytomineService
@@ -79,10 +79,11 @@ class RestUserPositionController extends RestController {
 
     @RestApiMethod(description="Summarize the UserPosition entries.")
     @RestApiParams(params=[
-            @RestApiParam(name="image", type="long", paramType = RestApiParamType.PATH, description = "The image id (Mandatory)"),
-            @RestApiParam(name="user", type="long", paramType = RestApiParamType.QUERY, description = "The user id (Optional)"),
-            @RestApiParam(name="afterThan", type="long", paramType = RestApiParamType.QUERY, description = "A date. Will select all the entries created after this date. (Optional)"),
-            @RestApiParam(name="showDetails", type="boolean", paramType = RestApiParamType.QUERY, description = "Optional. If true, will give the complete list"),
+            @RestApiParam(name="image", type="long", paramType = RestApiParamType.PATH, description = "The image id"),
+            @RestApiParam(name="user", type="long", paramType = RestApiParamType.QUERY, description = "The user id", required=false),
+            @RestApiParam(name="afterThan", type="long", paramType = RestApiParamType.QUERY, description = "A date. Will select all the entries created after this date.", required=false),
+            @RestApiParam(name="beforeThan", type="long", paramType = RestApiParamType.QUERY, description = "A date. Will select all the entries created before this date.", required=false),
+            @RestApiParam(name="showDetails", type="boolean", paramType = RestApiParamType.QUERY, description = "Optional. If true, will give the complete list", required=false),
     ])
     def list() {
         ImageInstance image = imageInstanceService.read(params.image)

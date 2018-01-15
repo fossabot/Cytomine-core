@@ -34,7 +34,7 @@ import org.restapidoc.pojo.RestApiParamType
  * A project has some images and a set of annotation
  * Users can access to project with Spring security Acl plugin
  */
-@RestApi(name = "project services", description = "Methods for managing projects")
+@RestApi(name = "Project | project services", description = "Methods for managing projects")
 class RestProjectController extends RestController {
 
     def springSecurityService

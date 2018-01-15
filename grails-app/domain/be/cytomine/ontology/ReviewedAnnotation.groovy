@@ -33,7 +33,7 @@ import org.restapidoc.annotation.RestApiObjectFields
  *  A reviewed annotation is an user/algo-annotation validated by a user.
  *  When a user validate an user/algoannotation, we copy all data from the validated annotation to create the review annotation
  */
-@RestApiObject(name = "reviewed annotation", description = "A reviewed annotation is an user/algo-annotation validated by a user. When a user validate an user/algoannotation, we copy all data from the validated annotation to create the review annotation")
+@RestApiObject(name = "Reviewed annotation", description = "A reviewed annotation is an user/algo-annotation validated by a user. When a user validate an user/algoannotation, we copy all data from the validated annotation to create the review annotation")
 class ReviewedAnnotation extends AnnotationDomain implements Serializable {
 
 //    returnArray['terms'] = domain?.termsId()

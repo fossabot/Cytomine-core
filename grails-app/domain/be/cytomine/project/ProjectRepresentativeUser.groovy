@@ -24,7 +24,7 @@ import be.cytomine.utils.JSONUtils
 import org.restapidoc.annotation.RestApiObject
 import org.restapidoc.annotation.RestApiObjectField
 
-@RestApiObject(name = "ProjectRepresentativeUser", description = "A ProjectRepresentativeUser is an user considered as the reference for the associate project")
+@RestApiObject(name = "Project representative user", description = "A Project representative user is an user considered as the reference for the associate project")
 class ProjectRepresentativeUser extends CytomineDomain {
 
     @RestApiObjectField(description = "The user considered as the reference")

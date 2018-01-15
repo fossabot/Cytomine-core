@@ -32,7 +32,7 @@ import org.restapidoc.annotation.RestApiObjectFields
  * Time: 8:33
  * A position of an image in its group
  */
-@RestApiObject(name = "image sequence", description = "A position of an image in the image group")
+@RestApiObject(name = "Image sequence", description = "A position of an image in the image group")
 class ImageSequence extends CytomineDomain implements Serializable {
 
     @RestApiObjectField(description = "The image")

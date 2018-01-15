@@ -25,7 +25,7 @@ import org.restapidoc.annotation.RestApiObjectField
 /**
  * A discipline is a thematic for a project
  */
-@RestApiObject(name = "discipline", description = "A discipline is a thematic for a project")
+@RestApiObject(name = "Discipline", description = "A discipline is a thematic for a project")
 class Discipline extends CytomineDomain implements Serializable{
 
     @RestApiObjectField(description = "The name of the discipline")

@@ -32,7 +32,7 @@ import org.restapidoc.pojo.RestApiParamType
  * Controller that handle request on annotation created by software (job)
  * Annotation my be created by humain (RestUserAnnotationController).
  */
-@RestApi(name = "algo annotation services", description = "Methods for managing an annotation created by a software")
+@RestApi(name = "Ontology | algo annotation services", description = "Methods for managing an annotation created by a software")
 class  RestAlgoAnnotationController extends RestController {
 
     def algoAnnotationService

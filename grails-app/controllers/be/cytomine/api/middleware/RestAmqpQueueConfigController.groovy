@@ -33,7 +33,7 @@ import org.restapidoc.pojo.RestApiParamType
  *
  * Controller for the possible configurations for an AMQP queue
  */
-@RestApi(name = "AMQP Queue Configuration services", description = "Methods useful for managing AMQP configurations")
+@RestApi(name = "Middleware | AMQP Queue Configuration services", description = "Methods useful for managing AMQP configurations")
 class RestAmqpQueueConfigController extends RestController {
 
     def amqpQueueConfigService

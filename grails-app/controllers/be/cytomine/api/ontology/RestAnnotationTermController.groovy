@@ -38,7 +38,7 @@ import org.restapidoc.pojo.RestApiParamType
  * Controller that handle link between an annotation and a term
  * This controller carry request for (user)annotationterm and algoannotationterm
  */
-@RestApi(name = "annotation term service", description = "Methods for managing annotation term. Term added to an annotation by user or job.")
+@RestApi(name = "Ontology | annotation term services", description = "Methods for managing annotation term. Term added to an annotation by user or job.")
 class RestAnnotationTermController extends RestController {
 
     def termService

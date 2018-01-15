@@ -26,7 +26,7 @@ import org.restapidoc.annotation.RestApiObjectFields
  * Data created by a job
  * This concerns only data files (annotation or term are store in domain database)
  */
-@RestApiObject(name = "job data", description = "Data created by a job. This concerns only data files (annotation or term are store in domain database). If config cytomine.jobdata.filesystem is true, file are stored in filesystem, otherwise they are store in database.")
+@RestApiObject(name = "Job data", description = "Data created by a job. This concerns only data files (annotation or term are store in domain database). If config cytomine.jobdata.filesystem is true, file are stored in filesystem, otherwise they are store in database.")
 class JobData extends CytomineDomain {
 
     /**

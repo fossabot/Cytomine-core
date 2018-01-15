@@ -215,7 +215,7 @@ var ProjectDashboardAlgos = Backbone.View.extend({
 
 
         //init modal for job filter
-        var modalCompare = new CustomModal({
+        var modalFilter = new CustomModal({
             idModal : "filterJobModal",
             button :  $("#softwareFilterJobButton"),
             header :"Filter jobs",
@@ -232,7 +232,7 @@ var ProjectDashboardAlgos = Backbone.View.extend({
                 }).render();
             }
         });
-        modalCompare.addButtons("closeCompare","Close",false,true);
+        modalFilter.addButtons("closeCompare","Close",false,true);
         */
     },
     printComparatorLaunch: function () {

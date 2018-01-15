@@ -30,7 +30,7 @@ import org.restapidoc.annotation.RestApiObjectFields
  * An ontology is a list of term
  * Each term may be link to other term with a special relation (parent, synonym,...)
  */
-@RestApiObject(name = "ontology", description = "An ontology is a list of term. Each term may be link to other term with a special relation (parent, synonym,...)")
+@RestApiObject(name = "Ontology", description = "An ontology is a list of term. Each term may be link to other term with a special relation (parent, synonym,...)")
 class Ontology extends CytomineDomain implements Serializable {
 
     @RestApiObjectField(description = "The name of the ontology")

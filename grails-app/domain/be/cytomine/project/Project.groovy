@@ -28,7 +28,7 @@ import org.restapidoc.annotation.RestApiObjectFields
  * A project is the main cytomine domain
  * It structure user data
  */
-@RestApiObject(name = "project", description="A project is the main cytomine domain, its a workspace to store images, annotations,...")
+@RestApiObject(name = "Project", description="A project is the main cytomine domain, its a workspace to store images, annotations,...")
 class Project extends CytomineDomain implements Serializable {
 
     static enum EditingMode {

@@ -30,7 +30,7 @@ import org.restapidoc.pojo.RestApiParamType
  * User: lrollus
  * Date: 18/05/11
  */
-@RestApi(name = "image sequence services", description = "Methods for managing image sequence that represent an image from a group in a given channel, zstack, slice, time...")
+@RestApi(name = "Image | multidim | image sequence services", description = "Methods for managing image sequence that represent an image from a group in a given channel, zstack, slice, time...")
 class RestImageSequenceController extends RestController {
 
     def imageSequenceService

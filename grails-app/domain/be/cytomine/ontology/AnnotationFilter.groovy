@@ -29,7 +29,7 @@ import org.restapidoc.annotation.RestApiObjectFields
 /**
  * Annotation filter define a set of filter for annotation listing
  */
-@RestApiObject(name = "annotation filter", description="Define a set of filter for annotation listing")
+@RestApiObject(name = "Annotation filter", description="Define a set of filter for annotation listing")
 class AnnotationFilter extends CytomineDomain implements Serializable {
 
     @RestApiObjectField(description = "The filter name")

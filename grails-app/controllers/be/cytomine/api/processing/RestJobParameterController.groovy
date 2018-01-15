@@ -31,7 +31,7 @@ import org.restapidoc.pojo.RestApiParamType
  * Each software may have some parameters (e.g.: cytomine project id, number of thread,...)
  * A job parameter is a software parameter instance with a specific value for this job
  */
-@RestApi(name = "job parameter services", description = "Methods for managing job parameter. Each software may have some parameters (e.g.: cytomine project id, number of thread,...). A job parameter is a software parameter instance with a specific value for this job")
+@RestApi(name = "Processing | job parameter services", description = "Methods for managing job parameter. Each software may have some parameters (e.g.: cytomine project id, number of thread,...). A job parameter is a software parameter instance with a specific value for this job")
 class RestJobParameterController extends RestController {
 
     def jobParameterService

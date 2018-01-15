@@ -29,7 +29,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * A SearchEngineFilter is a re-usable filter for the SearchEngine
  * It contains the words searched and the restrictions (domain types or attributes) with others parameters
  */
-@RestApiObject(name = "searchEngineFilter", description = "A SearchEngineFilter is a re-usable filter for the SearchEngine. It contains the words searched and the restrictions (domain types or attributes) with others parameters")
+@RestApiObject(name = "Search engine filter", description = "A SearchEngineFilter is a re-usable filter for the SearchEngine. It contains the words searched and the restrictions (domain types or attributes) with others parameters")
 class SearchEngineFilter extends CytomineDomain implements Serializable {
 
     @RestApiObjectField(description = "The name of the filter")

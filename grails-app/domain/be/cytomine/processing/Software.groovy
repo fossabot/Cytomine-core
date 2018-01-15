@@ -28,7 +28,7 @@ import org.restapidoc.annotation.RestApiObjectFields
  * Software is an application that can read/add/update/delete data from cytomine
  * Each time a software is launch, we create a job instance
  */
-@RestApiObject(name = "software", description = "Software is an application that can read/add/update/delete data from cytomine. Each time a software is launch, we create a job instance")
+@RestApiObject(name = "Software", description = "Software is an application that can read/add/update/delete data from cytomine. Each time a software is launch, we create a job instance")
 class Software extends CytomineDomain {
 
 

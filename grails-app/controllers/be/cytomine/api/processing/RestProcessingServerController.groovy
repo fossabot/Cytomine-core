@@ -19,6 +19,7 @@ package be.cytomine.api.processing
 import be.cytomine.api.RestController
 import be.cytomine.processing.ProcessingServer
 import grails.converters.JSON
+import org.restapidoc.annotation.RestApi
 import org.restapidoc.annotation.RestApiMethod
 import org.restapidoc.annotation.RestApiParam
 import org.restapidoc.annotation.RestApiParams
@@ -27,16 +28,21 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * TODO:: comment this controller. Explain the "processing server goal"
  */
-//TODO:APIDOC
+@RestApi(name="Processing | processing server", description="Methods to manage processing servers")
 class RestProcessingServerController extends RestController {
 
     def processingServerService
 
-    def list = {
+    @RestApiMethod(description="List the processing servers", listing=true)
+    def list() {
         responseSuccess(processingServerService.list())
     }
 
-    def show = {
+    @RestApiMethod(description="Get a processing server")
+    @RestApiParams(params=[
+            @RestApiParam(name="id", type="long", paramType = RestApiParamType.PATH, description = "The processingServer id")
+    ])
+    def show() {
         ProcessingServer processingServer = processingServerService.read(params.long('id'))
         if (processingServer) {
             responseSuccess(processingServer)

@@ -275,7 +275,7 @@ abstract class AnnotationDomain extends CytomineDomain implements Serializable {
         //get num points
         int imageWidth = image.baseImage.getWidth()
         int imageHeight = image.baseImage.getHeight()
-        if (location.getNumPoints()>3) {
+        if (location.getNumPoints()>1) {
             Envelope env = location.getEnvelopeInternal();
             Integer maxY = env.getMaxY();
             Integer minX = env.getMinX();
@@ -294,7 +294,7 @@ abstract class AnnotationDomain extends CytomineDomain implements Serializable {
 
     def toCropURL(params=[:]) {
         def boundaries = retrieveCropParams(params)
-        return UrlApi.getCropURL(image.baseImage.id, boundaries)
+        return UrlApi.getCropURL(image.baseImage.id, boundaries, boundaries.format)
     }
 
     def toCropParams(params=[:]) {
@@ -314,6 +314,9 @@ abstract class AnnotationDomain extends CytomineDomain implements Serializable {
     public LinkedHashMap<String, Integer> retrieveCropParams(params) {
         def boundaries = getBoundaries()
 
+        if (params.format) boundaries.format = params.format
+        else boundaries.format = "png"
+
         if (params.zoom) boundaries.zoom = params.zoom
         if (params.maxSize) boundaries.maxSize = params.maxSize
         if (params.draw) {
@@ -331,7 +334,8 @@ abstract class AnnotationDomain extends CytomineDomain implements Serializable {
         }
         if (params.alphaMask) {
             boundaries.alphaMask = true
-            boundaries.location = location.toText()//location.toText()
+            boundaries.location = location.toText()
+            boundaries.format = "png"
         }
 
         if(location instanceof com.vividsolutions.jts.geom.Point && !params.point.equals("false")) {
@@ -343,6 +347,13 @@ abstract class AnnotationDomain extends CytomineDomain implements Serializable {
             //limit the size (text) for the geometry (url max lenght)
             boundaries.location = simplifyGeometryService.simplifyPolygonTextSize(boundaries.location)
         }
+
+        if (params.colormap) boundaries.colormap = params.colormap
+        if (params.inverse) boundaries.inverse = params.inverse
+        if (params.bits) boundaries.bits = params.bits
+        if (params.contrast) boundaries.contrast = params.contrast
+        if (params.gamma) boundaries.gamma = params.gamma
+
         boundaries
     }
 
@@ -442,7 +453,7 @@ abstract class AnnotationDomain extends CytomineDomain implements Serializable {
 
 
         //for geometrycollection, we may take first collection element
-        if (type.equals("LINESTRING") || type.equals("MULTILINESTRING") || type.equals("GEOMETRYCOLLECTION")) {
+        if (type.equals("MULTILINESTRING") || type.equals("GEOMETRYCOLLECTION")) {
             //geometry collection, take first elem
             throw new WrongArgumentException("${geom.getGeometryType()} is not a valid geometry type!")
         }

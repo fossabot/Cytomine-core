@@ -23,7 +23,7 @@ import org.restapidoc.annotation.RestApiObjectField
 /**
  * User role (user, admin,...)
  */
-@RestApiObject(name = "sec role", description="A user role on the full app (user, admin, guest,...)")
+@RestApiObject(name = "Sec role", description="A user role on the full app (user, admin, guest,...)")
 class SecRole extends CytomineDomain implements Serializable {
 
     @RestApiObjectField(description="The role name")

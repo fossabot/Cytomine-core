@@ -43,21 +43,25 @@ class ImageGroupUrlMappings {
         }
 
         /* Image group Hdf5 special */
-        /*"/api/imagegrouph5.$format"(controller: "restImageGroup"){
-            action = [POST:"addh5"]
+        "/api/imagegroupHDF5.$format"(controller: "restImageGroupHDF5"){
+            action = [POST:"add"]
         }
 
-        "/api/imagegrouph5/$id.$format"(controller: "restImageGroup"){
-            action = [GET: "geth5", DELETE:"deleteh5"]
+        "/api/imagegroupHDF5/$id.$format"(controller: "restImageGroupHDF5"){
+            action = [GET:"show", PUT:"update", DELETE:"delete"]
         }
 
-        "/api/imagegroup/$group/imagegrouph5.$format"(controller: "restImageGroup"){
-            action = [GET: "geth5FromImageGroup", DELETE:"deleteh5FromImageGroup"]
+        "/api/imagegroup/$group/imagegroupHDF5.$format"(controller: "restImageGroupHDF5"){
+            action = [GET: "showFromImageGroup", DELETE:"deleteFromImageGroup"]
         }
 
-        "/api/imagegrouph5/$id/$x/$y/pxl.$format"(controller: "restImageGroup"){
-            action = [GET: "pxlh5"]
-        }*/
+        "/api/imagegroupHDF5/$id/$x/$y/pixel.$format"(controller: "restImageGroupHDF5"){
+            action = [GET: "pixelHDF5"]
+        }
+
+        "/api/imagegroupHDF5/$id/$x/$y/$w/$h/rectangle.$format"(controller: "restImageGroupHDF5"){
+            action = [GET: "rectangleHDF5"]
+        }
 
     }
 }

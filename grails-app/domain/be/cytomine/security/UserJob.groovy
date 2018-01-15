@@ -21,7 +21,7 @@ import org.restapidoc.annotation.RestApiObject
 import org.restapidoc.annotation.RestApiObjectField
 import org.restapidoc.annotation.RestApiObjectFields
 
-@RestApiObject(name = "user job", description="A cytomine software user")
+@RestApiObject(name = "User job", description="A cytomine software user")
 class UserJob extends SecUser {
 
     def springSecurityService

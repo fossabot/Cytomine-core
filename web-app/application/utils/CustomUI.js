@@ -70,8 +70,8 @@ var CustomUI = {
         {componentId: "project-explore-annotation-properties", componentName: "Current annotation - properties panel"},
         {componentId: "project-explore-annotation-description", componentName: "Current annotation - description panel"},
         {componentId: "project-explore-annotation-similarities", componentName: "Current annotation - similarities panel"},
-        {componentId: "project-explore-annotation-panel", componentName: "Annotations panel (under the image)"}
-        //{componentId: "project-explore-spectra-panel", componentName: "Spectra panel (under the image)"}
+        {componentId: "project-explore-annotation-panel", componentName: "Annotations panel (under the image)"},
+        {componentId: "project-explore-spectra-panel", componentName: "Spectra panel (under the image)"}
 
     ],
     componentsTools: [

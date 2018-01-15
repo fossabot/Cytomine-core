@@ -29,7 +29,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller for ontology (terms tree)
  */
-@RestApi(name = "ontology services", description = "Methods for managing ontologies")
+@RestApi(name = "Ontology | ontology services", description = "Methods for managing ontologies")
 class RestOntologyController extends RestController {
 
     def springSecurityService

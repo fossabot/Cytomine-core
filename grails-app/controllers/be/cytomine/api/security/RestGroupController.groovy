@@ -28,7 +28,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller for group of users
  */
-@RestApi(name = "group services", description = "Methods for managing user groups")
+@RestApi(name = "Security | group services", description = "Methods for managing user groups")
 class RestGroupController extends RestController {
 
     def abstractImageService

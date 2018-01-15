@@ -80,8 +80,7 @@ var ImageGroupController = Backbone.Router.extend({
 
     convert: function(group){
         var h5group = new ImageGroupHDF5Model({
-            group: group,
-            filenames: "hdf5_"+group
+            group: group
         });
         h5group.save();
         $("#tabs-images-"+window.app.status.currentProject).find("#con-"+group).html("Conversion is taking place. You will be notified by mail");

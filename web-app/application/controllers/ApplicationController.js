@@ -23,8 +23,7 @@ var ApplicationController = Backbone.Router.extend({
 
     routes: {
         "": "initialRoute",
-        "explorer": "explorer"/*,
-        "admin": "admin"*/
+        "explorer": "explorer"
     },
 
     startup: function () {

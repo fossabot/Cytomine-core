@@ -27,7 +27,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * A link between a ROI and a job template
  * The ROI may be a ROIAnnotation or antoher kind of annotation.
  */
-@RestApiObject(name = "software project", description = "A link between a ROI and a job template")
+@RestApiObject(name = "Job template annotation", description = "A link between a ROI and a job template")
 class JobTemplateAnnotation extends CytomineDomain implements Serializable{
 
     @RestApiObjectField(description = "The template")

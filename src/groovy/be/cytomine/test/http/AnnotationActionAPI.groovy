@@ -25,4 +25,18 @@ class AnnotationActionAPI extends DomainAPI {
         def result = doPOST(URL,json,username,password)
         return result
     }
+
+    static def listByImage(Long idImage, String username, String password, Long afterThan = null, Long beforeThan = null) {
+        String URL = Infos.CYTOMINEURL + "/api/imageinstance/$idImage/annotationactions.json?showDetails=true"
+        if(afterThan) URL += "&afterThan=$afterThan"
+        if(beforeThan) URL += "&beforeThan=$beforeThan"
+        return doGET(URL, username, password)
+    }
+
+    static def listByImageAndUser(Long idImage,Long idUser, String username, String password, Long afterThan = null, Long beforeThan = null) {
+        String URL = Infos.CYTOMINEURL + "/api/imageinstance/$idImage/annotationactions.json?user=$idUser&showDetails=true"
+        if(afterThan) URL += "&afterThan=$afterThan"
+        if(beforeThan) URL += "&beforeThan=$beforeThan"
+        return doGET(URL, username, password)
+    }
 }

@@ -27,7 +27,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * User - role link
  * A user may have many role (user+admin for example)
  */
-@RestApiObject(name = "sec user sec role", description="User - role link. A user may have many role (USER, ADMIN, GUEST)")
+@RestApiObject(name = "Sec user sec role", description="User - role link. A user may have many role (USER, ADMIN, GUEST)")
 class SecUserSecRole extends CytomineDomain implements Serializable {
 
     @RestApiObjectField(description = "The user id")

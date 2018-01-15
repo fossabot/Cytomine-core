@@ -29,7 +29,7 @@ import org.restapidoc.pojo.RestApiParamType
  * Controller for discipline
  * A discipline can be link with a project
  */
-@RestApi(name = "discipline services", description = "Methods for managing discipline")
+@RestApi(name = "Project | discipline services", description = "Methods for managing discipline")
 class RestDisciplineController extends RestController {
 
     def disciplineService

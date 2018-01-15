@@ -28,7 +28,7 @@ import org.restapidoc.pojo.RestApiParamType
  * Controller for relation between terms (parent, synonym,...)
  * We only use "parent" now, but we could later implement CRUD to support new type of relation
  */
-@RestApi(name = "relation services", description = "Methods for managing relations")
+@RestApi(name = "Ontology | relation services", description = "Methods for managing relations")
 class RestRelationController extends RestController {
 
 

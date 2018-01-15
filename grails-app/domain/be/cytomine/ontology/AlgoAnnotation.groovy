@@ -33,7 +33,7 @@ import org.restapidoc.annotation.RestApiObjectFields
  * Annotation added by a job (software)
  * Extend AnnotationDomain that provide generic Annotation properties (location,...)
  */
-@RestApiObject(name = "algo annotation")
+@RestApiObject(name = "Algo annotation")
 class AlgoAnnotation extends AnnotationDomain implements Serializable {
 
     /**

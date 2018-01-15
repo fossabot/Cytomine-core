@@ -20,8 +20,7 @@ grails.reload.enabled = true
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
-//grails.project.war.file = "target/${appName}-${appVersion}.war"
-grails.project.war.file = "target/${appName}.war"
+grails.project.war.file = "target/latest.war"
 //grails.project.dependency.resolver="ivy"
 grails.project.dependency.resolver = "maven"
 
@@ -91,7 +90,7 @@ grails.project.dependency.resolution = {
         compile ':cache:1.1.7'
         compile ':asset-pipeline:1.9.6'
         compile ":grails-melody:1.49.0"
-        compile ":rest-api-doc:0.4.1"
+        compile ":rest-api-doc:0.6"
         compile ":rest:0.8"
         compile ':spring-security-core:2.0-RC4'
         compile ":spring-security-acl:2.0-RC2"

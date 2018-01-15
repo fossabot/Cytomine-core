@@ -30,7 +30,7 @@ import org.restapidoc.pojo.RestApiParamType
  * Time: 15:37
  * To change this template use File | Settings | File Templates.
  */
-@RestApi(name = "search services", description = "Methods for searching domain")
+@RestApi(name = "Search | search services", description = "Methods for searching domain")
 class SearchController extends RestController {
 
     def searchService

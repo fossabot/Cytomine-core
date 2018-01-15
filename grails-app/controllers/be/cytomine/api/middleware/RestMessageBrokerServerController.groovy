@@ -33,7 +33,7 @@ import org.restapidoc.pojo.RestApiParamType
  *
  * Controller for MessageBrokerServer
  */
-@RestApi(name = "message broker server services", description = "Methods for managing message broker servers")
+@RestApi(name = "Middleware | message broker server services", description = "Methods for managing message broker servers")
 class RestMessageBrokerServerController extends RestController{
 
     def messageBrokerServerService

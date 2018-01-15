@@ -28,7 +28,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * Term added to an annotation by a real user (not a job!)
  * Many user can add a term to a single annotation (not only the user that created this annotation)
  */
-@RestApiObject(name = "annotation term", description = "Term added to an annotation by a real user (not a job!). Many user can add a term to a single annotation (not only the user that created this annotation)")
+@RestApiObject(name = "Annotation term", description = "Term added to an annotation by a real user (not a job!). Many user can add a term to a single annotation (not only the user that created this annotation)")
 class AnnotationTerm extends CytomineDomain implements Serializable {
 
     @RestApiObjectField(description = "The annotation id", apiFieldName = "userannotation")

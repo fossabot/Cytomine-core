@@ -30,7 +30,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * A search engine (v2)
  */
-@RestApi(name = "search services", description = "Methods for searching domain (v2)")
+@RestApi(name = "Search | search engine services", description = "Methods for searching domain (v2)")
 class SearchEngineController extends RestController {
 
     def searchEngineService

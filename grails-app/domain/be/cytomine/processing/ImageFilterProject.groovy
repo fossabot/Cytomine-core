@@ -27,7 +27,7 @@ import org.restapidoc.annotation.RestApiObjectFields
 /**
  * An image filter can be link to many projects
  */
-@RestApiObject(name = "image filter project", description = "An image filter can be link to many projects")
+@RestApiObject(name = "Image filter project", description = "An image filter can be link to many projects")
 class ImageFilterProject extends CytomineDomain implements Serializable {
 
     @RestApiObjectField(description = "The filter")

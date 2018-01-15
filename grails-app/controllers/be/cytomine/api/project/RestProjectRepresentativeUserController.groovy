@@ -30,7 +30,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller for project default layer
  */
-@RestApi(name = "RestProjectRepresentativeUserController", description = "Controller for project representative user")
+@RestApi(name = "Project | representative user services", description = "Controller for project representative user")
 class RestProjectRepresentativeUserController extends RestController {
 
     def projectRepresentativeUserService

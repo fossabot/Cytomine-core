@@ -34,8 +34,8 @@ class UrlApi {
         return "${serverUrl()}/api/$type/${id}.json"
     }
 
-    static def getCropURL(Long idImage, def parameters) {
-        String url = "${serverUrl()}/api/abstractimage/$idImage/crop.png"
+    static def getCropURL(Long idImage, def parameters, def format="png") {
+        String url = "${serverUrl()}/api/abstractimage/$idImage/crop.$format"
         String query = parameters.collect { key, value ->
             if (value instanceof String)
                 value = URLEncoder.encode(value, "UTF-8")
@@ -44,8 +44,8 @@ class UrlApi {
         return "$url?$query"
     }
 
-    static def getMaskURL(Long idImage, def parameters) {
-        String url = "${serverUrl()}/api/abstractimage/$idImage/mask.png"
+    static def getMaskURL(Long idImage, def parameters, def format="png") {
+        String url = "${serverUrl()}/api/abstractimage/$idImage/mask.$format"
         String query = parameters.collect { key, value ->
             if (value instanceof String)
                 value = URLEncoder.encode(value, "UTF-8")
@@ -70,8 +70,8 @@ class UrlApi {
      * @param idAnnotation Annotation id
      * @return full cytomine url
      */
-    static def getUserAnnotationCropWithAnnotationId(Long idAnnotation) {
-        return "${serverUrl()}/api/userannotation/$idAnnotation/crop.jpg"
+    static def getUserAnnotationCropWithAnnotationId(Long idAnnotation, def format="jpg") {
+        return "${serverUrl()}/api/userannotation/$idAnnotation/crop.$format"
     }
 
     /**
@@ -80,8 +80,8 @@ class UrlApi {
      * @param idAnnotation Annotation id
      * @return full cytomine url
      */
-    static def getROIAnnotationCropWithAnnotationId(Long idAnnotation) {
-        return "${serverUrl()}/api/roiannotation/$idAnnotation/crop.jpg"
+    static def getROIAnnotationCropWithAnnotationId(Long idAnnotation, def format="jpg") {
+        return "${serverUrl()}/api/roiannotation/$idAnnotation/crop.$format"
     }
 
     /**
@@ -91,8 +91,8 @@ class UrlApi {
      * @param maxWidthOrHeight Max size for the downloaded picture
      * @return full cytomine url
      */
-    static def getUserAnnotationCropWithAnnotationIdWithMaxWithOrHeight(Long idAnnotation, int maxWidthOrHeight) {
-        return "${serverUrl()}/api/userannotation/$idAnnotation/crop.png?maxSize=$maxWidthOrHeight"
+    static def getUserAnnotationCropWithAnnotationIdWithMaxWithOrHeight(Long idAnnotation, int maxWidthOrHeight, def format="png") {
+        return "${serverUrl()}/api/userannotation/$idAnnotation/crop.$format?maxSize=$maxWidthOrHeight"
     }
 
     /**
@@ -101,21 +101,21 @@ class UrlApi {
      * @param idAnnotation Annotation id
      * @return full cytomine url
      */
-    static def getAlgoAnnotationCropWithAnnotationId(Long idAnnotation) {
-        return "${serverUrl()}/api/algoannotation/$idAnnotation/crop.png"
+    static def getAlgoAnnotationCropWithAnnotationId(Long idAnnotation, def format="png") {
+        return "${serverUrl()}/api/algoannotation/$idAnnotation/crop.$format"
     }
 
-    static def getAnnotationCropWithAnnotationId(Long idAnnotation, def maxSize = null) {
-        return "${serverUrl()}/api/annotation/$idAnnotation/crop.png" + (maxSize? "?maxSize=$maxSize" :"")
+    static def getAnnotationCropWithAnnotationId(Long idAnnotation, def maxSize = null, def format="png") {
+        return "${serverUrl()}/api/annotation/$idAnnotation/crop.$format" + (maxSize? "?maxSize=$maxSize" :"")
     }
 
-    static def getAssociatedImage(Long idAbstractImage, String label, def maxSize = null) {
+    static def getAssociatedImage(Long idAbstractImage, String label, def maxSize = null, def format="png") {
         String size = maxSize ? "?maxWidth=$maxSize" : "";
-        return "${serverUrl()}/api/abstractimage/$idAbstractImage/associated/$label" + ".png$size"
+        return "${serverUrl()}/api/abstractimage/$idAbstractImage/associated/$label" + ".$format$size"
     }
 
-    static def getThumbImage(Long idAbstractImage, def maxSize) {
-        return "${serverUrl()}/api/abstractimage/$idAbstractImage/thumb.png?maxSize=$maxSize"
+    static def getThumbImage(Long idAbstractImage, def maxSize, def format="png") {
+        return "${serverUrl()}/api/abstractimage/$idAbstractImage/thumb.$format?maxSize=$maxSize"
     }
 
     static def getThumbMultiDimImage(Long idImageGroup, def maxSize) {
@@ -128,8 +128,8 @@ class UrlApi {
      * @param idAnnotation Annotation id
      * @return full cytomine url
      */
-    static def getAnnotationMinCropWithAnnotationId(Long idAnnotation) {
-        return "${serverUrl()}/api/annotation/$idAnnotation/crop.png?maxSize=256"
+    static def getAnnotationMinCropWithAnnotationId(Long idAnnotation, def format="png") {
+        return "${serverUrl()}/api/annotation/$idAnnotation/crop.$format?maxSize=256"
     }
     static def getAnnotationMinCropWithAnnotationIdOld(Long idAnnotation) {
         return "${serverUrl()}/api/annotation/$idAnnotation/cropMin.jpg"
@@ -142,8 +142,8 @@ class UrlApi {
      * @param maxWidthOrHeight Max size for the downloaded picture
      * @return full cytomine url
      */
-    static def getAlgoAnnotationCropWithAnnotationIdWithMaxWithOrHeight(Long idAnnotation, int maxWidthOrHeight) {
-        return "${serverUrl()}/api/algoannotation/$idAnnotation/crop.png?maxSize=$maxWidthOrHeight"
+    static def getAlgoAnnotationCropWithAnnotationIdWithMaxWithOrHeight(Long idAnnotation, int maxWidthOrHeight, def format="png") {
+        return "${serverUrl()}/api/algoannotation/$idAnnotation/crop.$format?maxSize=$maxWidthOrHeight"
     }
 
     /**
@@ -152,8 +152,8 @@ class UrlApi {
      * @param idAnnotation Annotation id
      * @return full cytomine url
      */
-    static def getReviewedAnnotationCropWithAnnotationId(Long idAnnotation) {
-        return "${serverUrl()}/api/reviewedannotation/$idAnnotation/crop.jpg"
+    static def getReviewedAnnotationCropWithAnnotationId(Long idAnnotation, def format="jpg") {
+        return "${serverUrl()}/api/reviewedannotation/$idAnnotation/crop.$format"
     }
 
     /**
@@ -163,8 +163,8 @@ class UrlApi {
      * @param maxWidthOrHeight Max size for the downloaded picture
      * @return full cytomine url
      */
-    static def getReviewedAnnotationCropWithAnnotationIdWithMaxWithOrHeight(Long idAnnotation, int maxWidthOrHeight) {
-        return "${serverUrl()}/api/reviewedannotation/$idAnnotation/crop.jpg?maxSize=$maxWidthOrHeight"
+    static def getReviewedAnnotationCropWithAnnotationIdWithMaxWithOrHeight(Long idAnnotation, int maxWidthOrHeight, def format="jpg") {
+        return "${serverUrl()}/api/reviewedannotation/$idAnnotation/crop.$format?maxSize=$maxWidthOrHeight"
     }
 
     /**
@@ -200,8 +200,8 @@ class UrlApi {
      * @param idImage Image id
      * @return full cytomine url
      */
-    static def getAbstractImageThumbURL(Long idImage) {
-        return  "${serverUrl()}/api/abstractimage/$idImage/thumb.png"
+    static def getAbstractImageThumbURL(Long idImage, def format="png") {
+        return  "${serverUrl()}/api/abstractimage/$idImage/thumb.$format"
     }
 
     static def serverUrl() {
