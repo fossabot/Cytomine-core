@@ -21,6 +21,7 @@ import be.cytomine.middleware.AmqpQueue
 import be.cytomine.middleware.AmqpQueueConfigInstance
 import be.cytomine.utils.Task
 import grails.converters.JSON
+import org.restapidoc.annotation.RestApi
 import org.restapidoc.annotation.RestApiMethod
 import org.restapidoc.annotation.RestApiParam
 import org.restapidoc.annotation.RestApiParams
@@ -31,6 +32,7 @@ import org.restapidoc.pojo.RestApiParamType
  * Date : 03/03/15
  * Time : 14:09
  */
+@RestApi(name="Middleware | AMPQ Queue Configuration instance services", description="Method to manage an instance of AMPQ configuration")
 class RestAmqpQueueConfigInstanceController extends RestController {
 
     def amqpQueueConfigInstanceService

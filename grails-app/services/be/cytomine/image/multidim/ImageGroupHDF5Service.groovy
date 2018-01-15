@@ -19,12 +19,13 @@ package be.cytomine.image.multidim
 import be.cytomine.CytomineDomain
 import be.cytomine.Exception.ConstraintException
 import be.cytomine.Exception.ObjectNotFoundException
+import be.cytomine.api.UrlApi
 import be.cytomine.command.AddCommand
 import be.cytomine.command.Command
 import be.cytomine.command.DeleteCommand
+import be.cytomine.command.EditCommand
 import be.cytomine.command.Transaction
 import be.cytomine.security.SecUser
-import be.cytomine.security.User
 import be.cytomine.utils.JSONUtils
 import be.cytomine.utils.ModelService
 import be.cytomine.utils.Task
@@ -33,6 +34,7 @@ import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
 
 import static groovyx.net.http.ContentType.*
+import static org.springframework.security.acls.domain.BasePermission.READ
 
 @Transactional
 class ImageGroupHDF5Service  extends  ModelService{
@@ -53,97 +55,93 @@ class ImageGroupHDF5Service  extends  ModelService{
     }
 
     ImageGroupHDF5 get(def id){
-        ImageGroupHDF5.get(id)
+        def group = ImageGroupHDF5.get(id)
+        if(group) {
+            securityACLService.check(group.container(), READ)
+        }
+        group
     }
 
     ImageGroupHDF5 read(def id){
-        ImageGroupHDF5.read(id)
+        def group = ImageGroupHDF5.read(id)
+        if(group) {
+            securityACLService.check(group.container(), READ)
+        }
+        group
     }
 
     def list(){
-        ImageGroupHDF5.list();
+        ImageGroupHDF5.list()
     }
 
     def getByGroup(ImageGroup group){
-        ImageGroupHDF5.findByGroup(group);
+        ImageGroupHDF5.findByGroup(group)
     }
 
     def add(def json){
-        //Add in db (maybe this should come last)
-       // securityACLService.check(json.project,Project,READ)
+        securityACLService.check(json.group, ImageGroup,"container",READ)
         SecUser currentUser = cytomineService.getCurrentUser()
-        String storage_base_path = grailsApplication.config.storage_path
-        json.filenames = storage_base_path   + "/" + currentUser.id + "/" + JSONUtils.getJSONAttrStr(json, 'filenames')
         json.user = currentUser.id
-        def email =  User.read(currentUser.id)
-        def resultDB
-        def group = JSONUtils.getJSONAttrInteger(json,'group',null)
 
-        //Convert the list in h5
+        def group = JSONUtils.getJSONAttrInteger(json,'group',0)
+        json.filename = "${grailsApplication.config.storage_path}/${currentUser.id}/${group}.h5"
+
         //First get all the ImageSequence from the imageGroup
         ImageGroup imageGroup = imageGroupService.read(group)
-        //def imagesSequenceList = []
-        if (imageGroup)  {
-            imagesSequenceList = imageSequenceService.list(imageGroup)
-        }
-        else {
-            return ; //Todo throw
-        }
+        if (imageGroup == null)
+            return
+
+        def imagesSequenceList = imageSequenceService.list(imageGroup)
+        if (imagesSequenceList.size() == 0)
+            throw new ConstraintException("You need to have at least one ImageSequence in your ImageGroup to convert it")
 
 
+        def response = executeCommand(new AddCommand(user: currentUser), null, json)
+        convert(currentUser, imagesSequenceList, json.filename, response?.data?.imagegrouphdf5?.id)
+        return response
+    }
+
+    private void convert(SecUser currentUser, def imagesSequenceList, def destination, def id){
         imagesSequenceList.sort{a,b -> a.channel <=> b.channel}
-        def imagesFilenames = imagesSequenceList.collect{
-            def absoluteTiffPath =  it.image.baseImage.getAbsolutePath()
-            def tiffPath = it.image.baseImage.path
-            def basePath = absoluteTiffPath - tiffPath
+        def imagesFilenames = imagesSequenceList.collect {
+            def absolutePath =  it.image.baseImage.getAbsolutePath()
+            def path = it.image.baseImage.path
+            def basePath = absolutePath - path
             basePath + it.image.baseImage.filename
         }
-        def filename = JSONUtils.getJSONAttrStr(json, 'filenames')
 
-        if(imagesFilenames.size() > 0) {
-            synchronized (this.getClass()) { //We add the group in db only if we have image to convert
-                Command c = new AddCommand(user: currentUser)
-                resultDB = executeCommand(c,null,json)
-            }
-            callIMSConversion(currentUser, imagesFilenames, filename)
-        }
-        else {
-            throw new ConstraintException("You need to have at least one Image Sequence in your Image Group to convert it")
-        }
+        def body = [user: currentUser.id, files: imagesFilenames, dest: destination, id: id,
+                    cytomine:UrlApi.serverUrl()]
 
+        log.info body
 
-
-
-        resultDB
-
-    }
-
-    private void callIMSConversion(SecUser currentUser, def imagesFilenames, String filename){
         String imageServerURL = grailsApplication.config.grails.imageServerURL[0]
         String url = "/multidim/convert.json"
-        log.info "$imageServerURL" + url
         def http = new HTTPBuilder(imageServerURL)
-        http.request(Method.POST) {
-            uri.path = url
-            requestContentType = URLENC
-            body = [user: currentUser.id, files: imagesFilenames, dest: filename]
-            response.success = { resp ->  log.info  "Imagegroup convert launch success ${resp.statusLine}" }
-        }
+        http.post( path: url, requestContentType: URLENC, body : body)
     }
 
-    def retrieve(def ids) {
-        def id = Integer.parseInt(ids + "")
-        CytomineDomain domain = currentDomain().get(id)
-        if (!domain) {
-            throw new ObjectNotFoundException("${currentDomain().class} " + id + " not found")
-        }
-        return domain
+    def update(ImageGroupHDF5 domain, def jsonNewData) {
+        securityACLService.check(domain.container(),READ)
+
+        SecUser currentUser = cytomineService.getCurrentUser()
+        Command c = new EditCommand(user: currentUser)
+        executeCommand(c,domain,jsonNewData)
     }
+
+//    def retrieve(def ids) {
+//        def id = Integer.parseInt(ids + "")
+//        CytomineDomain domain = currentDomain().get(id)
+//        if (!domain) {
+//            throw new ObjectNotFoundException("${currentDomain().class} " + id + " not found")
+//        }
+//        return domain
+//    }
 
     def delete(ImageGroupHDF5 domain, Transaction transaction = null, Task task = null, boolean printMessage = true) {
-      //  securityACLService.check(domain.container(),READ)
+        securityACLService.check(domain.container(),READ)
         SecUser currentUser = cytomineService.getCurrentUser()
-        Command c = new DeleteCommand(user: currentUser,transaction:transaction)
+        Command c = new DeleteCommand(user: currentUser, transaction:transaction)
         return executeCommand(c,domain,null)
     }
 }

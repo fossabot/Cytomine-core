@@ -22,7 +22,7 @@ import be.cytomine.security.SecUser
 import org.restapidoc.annotation.RestApiObject
 import org.restapidoc.annotation.RestApiObjectField
 
-@RestApiObject(name = "annotation index", description="A index entry that store, for an image and a user, the number of annotation created/reviewed")
+@RestApiObject(name = "Annotation index", description="A index entry that store, for an image and a user, the number of annotation created/reviewed")
 class AnnotationIndex implements Serializable {
 
     @RestApiObjectField(description = "The user criteria", useForCreation = false)

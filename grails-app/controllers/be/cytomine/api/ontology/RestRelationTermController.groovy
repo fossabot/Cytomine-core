@@ -29,7 +29,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller for relation between terms in ontology (ex: parent)
  */
-@RestApi(name = "relation term services", description = "Methods for managing relation between terms in ontology (ex: t1 parent t2)")
+@RestApi(name = "Ontology | relation term services", description = "Methods for managing relation between terms in ontology (ex: t1 parent t2)")
 class RestRelationTermController extends RestController {
 
     def relationService

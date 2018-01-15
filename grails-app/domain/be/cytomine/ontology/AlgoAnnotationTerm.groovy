@@ -31,7 +31,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * -algo annotation (create by a job)
  * -user annotation (create by a real user)
  */
-@RestApiObject(name = "algo annotation term", description ="Term added to an annotation by a job. Annotation can be: -algo annotation (create by a job) or -user annotation (create by a real user)")
+@RestApiObject(name = "Algo annotation term", description ="Term added to an annotation by a job. Annotation can be: -algo annotation (create by a job) or -user annotation (create by a real user)")
 class AlgoAnnotationTerm extends CytomineDomain implements Serializable {
 
     /**

@@ -1752,32 +1752,27 @@ class BasicInstanceBuilder {
 
     static ImageGroupHDF5 getImageGroupHDF5() {
         def project = getProject()
-        ImageGroup gp = getImageGroupNotExist(project, true)
-        def fn = gp.name
-        ImageGroupHDF5 imageGroupHDF5 = ImageGroupHDF5.findByGroup(gp)
+        ImageGroup group = getImageGroupNotExist(project, true)
+        ImageGroupHDF5 imageGroupHDF5 = ImageGroupHDF5.findByGroup(group)
         if (!imageGroupHDF5) {
-            imageGroupHDF5 = new ImageGroupHDF5(group: gp, filenames: fn)
+            imageGroupHDF5 = new ImageGroupHDF5(group: group, filename: "${group.name}.h5")
             imageGroupHDF5 = saveDomain(imageGroupHDF5)
         }
         imageGroupHDF5
     }
 
-
-//TODO good documentation
     //files is an array of AbstractImages that relies to file that really exist
-    static ImageGroupHDF5 getImageGroupHDF5NotExist(boolean save = false, def files = []) {
+    static ImageGroupHDF5 getImageGroupHDF5NotExist(boolean save = false, def abstractImages = []) {
         def project = getProject()
-        ImageGroup gp = getImageGroupNotExist(project, true)
-        def fn = gp.name
-        files.eachWithIndex{ abstractImage, i ->
+        ImageGroup group = getImageGroupNotExist(project, true)
+
+        abstractImages.eachWithIndex{ abstractImage, i ->
             def imageInstance = getImageInstanceNotExist(project, true)
             imageInstance.baseImage = abstractImage
             saveDomain(imageInstance)
-
-            //ImageSequence seq = getImageSequence(imageInstance, i, 0, 0, 0, gp, true)
         }
 
-        ImageGroupHDF5 imageGroupHDF5 = new ImageGroupHDF5(group: gp, filenames: fn)
+        ImageGroupHDF5 imageGroupHDF5 = new ImageGroupHDF5(group: group, filename: "${group.name}.h5")
         save ? saveDomain(imageGroupHDF5) : checkDomain(imageGroupHDF5)
     }
 }

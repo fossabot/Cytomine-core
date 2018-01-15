@@ -34,7 +34,7 @@ import org.restapidoc.pojo.RestApiParamType
  * Date: 18/05/11
  * Controller that handle request for project images.
  */
-@RestApi(name = "job template services", description = "Methods for managing job template, a pre-filled job to quickly run")
+@RestApi(name = "Processing | job template services", description = "Methods for managing job template, a pre-filled job to quickly run")
 class RestJobTemplateController extends RestController {
 
     def imageProcessingService

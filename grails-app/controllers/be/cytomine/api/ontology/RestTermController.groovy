@@ -31,7 +31,7 @@ import org.restapidoc.pojo.RestApiParamType
  * Controller for term request (word in ontology)
  */
 
-@RestApi(name = "term services", description = "Methods for managing terms")
+@RestApi(name = "Ontology | term services", description = "Methods for managing terms")
 class RestTermController extends RestController {
 
     def termService

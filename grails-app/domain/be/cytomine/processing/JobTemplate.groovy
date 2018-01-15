@@ -29,7 +29,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * Time: 7:33
  * A job template is a job with pre-filled parameters. It can be used to init a new "real" job on the basis of this template.
  */
-@RestApiObject(name = "job template", description = "A job template is a job with pre-filled parameters. It can be used to init a new 'real' job on the basis of this template.")
+@RestApiObject(name = "Job template", description = "A job template is a job with pre-filled parameters. It can be used to init a new 'real' job on the basis of this template.")
 class JobTemplate extends Job implements Serializable {
 
     @RestApiObjectField(description = "The template name")

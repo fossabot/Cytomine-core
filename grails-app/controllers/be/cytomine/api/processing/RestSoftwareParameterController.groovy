@@ -31,7 +31,7 @@ import org.restapidoc.pojo.RestApiParamType
  * A software may have some parameter (thread number, project id,...).
  * When a software is running, a job is created. Each software parameter will produced a job parameter with a specific value.
  */
-@RestApi(name = "software parameter services", description = "Methods for software parameters, a software may have some parameter (thread number, project id,...). When a software is running, a job is created. Each software parameter will produced a job parameter with a specific value.")
+@RestApi(name = "Processing | software parameter services", description = "Methods for software parameters, a software may have some parameter (thread number, project id,...). When a software is running, a job is created. Each software parameter will produced a job parameter with a specific value.")
 class RestSoftwareParameterController extends RestController{
 
     def softwareParameterService

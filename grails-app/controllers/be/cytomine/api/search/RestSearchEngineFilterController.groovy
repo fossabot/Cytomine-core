@@ -29,7 +29,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller for search engine filter
  */
-@RestApi(name = "search engine filter services", description = "Methods for managing filter of the search engine")
+@RestApi(name = "Search | search engine filter services", description = "Methods for managing filter of the search engine")
 class RestSearchEngineFilterController extends RestController {
 
     def springSecurityService

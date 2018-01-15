@@ -30,7 +30,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller that handle request on annotation filter
  */
-@RestApi(name = "annotation filter services", description = "Methods for managing a filter for annotation search (save search criteria)")
+@RestApi(name = "Ontology | annotation filter services", description = "Methods for managing a filter for annotation search (save search criteria)")
 class RestAnnotationFilterController extends RestController {
 
     def annotationFilterService

@@ -30,7 +30,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * Time: 8:33
  * An nestedImageInstance is a subimage of an already existing image instance
  */
-@RestApiObject(name = "nested image instance", description = "An sub image from an image instance (sub area, same image transformed,...)")
+@RestApiObject(name = "Nested image instance", description = "An sub image from an image instance (sub area, same image transformed,...)")
 class NestedImageInstance extends ImageInstance implements Serializable {
 
     //stack stuff

@@ -51,6 +51,8 @@ class BootstrapOldVersionService {
     def dataSource
     def storageService
     def tableService
+    def mongo
+    def noSQLCollectionService
 
     void execChangeForOldVersion() {
         def methods = this.metaClass.methods*.name.sort().unique()
@@ -68,6 +70,25 @@ class BootstrapOldVersionService {
         }
 
         Version.setCurrentVersion(Long.parseLong(grailsApplication.metadata.'app.version'))
+    }
+
+    void init20171219() {
+        boolean exists = new Sql(dataSource).rows("SELECT column_name "+
+                "FROM information_schema.columns "+
+                "WHERE table_name='image_grouphdf5' and column_name='progress';").size() == 1;
+        if(!exists){
+            // add columns
+            new Sql(dataSource).executeUpdate("ALTER TABLE image_grouphdf5 ADD COLUMN progress integer DEFAULT 0;")
+            new Sql(dataSource).executeUpdate("ALTER TABLE image_grouphdf5 ADD COLUMN status integer DEFAULT 0;")
+            new Sql(dataSource).executeUpdate("ALTER TABLE image_grouphdf5 RENAME filenames TO filename;")
+        }
+    }
+
+    void init20171124(){
+        def db = mongo.getDB(noSQLCollectionService.getDatabaseName())
+        db.annotationAction.update([:], [$rename:[annotation:'annotationIdent']], false, true)
+        db.annotationAction.update([:], [$set:[annotationClassName: 'be.cytomine.ontology.UserAnnotation']], false, true)
+        db.annotationAction.update([:], [$unset:[annotation:'']], false, true)
     }
 
     void init20170714(){

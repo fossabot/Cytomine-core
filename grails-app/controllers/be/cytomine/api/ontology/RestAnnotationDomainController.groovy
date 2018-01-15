@@ -49,7 +49,7 @@ import static org.springframework.security.acls.domain.BasePermission.ADMINISTRA
  * Controller that handle request on annotation.
  * It's main utility is to redirect request to the correct controller: user/algo/reviewed
  */
-@RestApi(name = "generic annotation services", description = "Methods for managing an annotation created by a software")
+@RestApi(name = "Ontology | generic annotation services", description = "Methods for managing an annotation created by a software")
 class RestAnnotationDomainController extends RestController {
 
     def userAnnotationService

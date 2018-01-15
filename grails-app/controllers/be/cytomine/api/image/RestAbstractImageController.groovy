@@ -38,7 +38,7 @@ import java.awt.image.BufferedImage
  * Controller for abstract image
  * An abstract image can be add in n projects
  */
-@RestApi(name = "abstract image services", description = "Methods for managing an image. See image instance service to manage an instance of image in a project.")
+@RestApi(name = "Image | abstract image services", description = "Methods for managing an image. See image instance service to manage an instance of image in a project.")
 class RestAbstractImageController extends RestController {
 
     def imagePropertiesService
@@ -55,10 +55,11 @@ class RestAbstractImageController extends RestController {
 
     @RestApiMethod(description="Get all image available for the current user", listing = true)
     @RestApiParams(params=[
-        @RestApiParam(name="project", type="long", paramType = RestApiParamType.PATH, description = "(Optional) If set, check if image is in project or not"),
-        @RestApiParam(name="sortColumn", type="string", paramType = RestApiParamType.QUERY, description = "(optional) Column sort (created by default)"),
-        @RestApiParam(name="sortDirection", type="string", paramType = RestApiParamType.QUERY, description = "(optional) Sort direction (desc by default)"),
-        @RestApiParam(name="search", type="string", paramType = RestApiParamType.QUERY, description = "(optional) Original filename search filter (all by default)")
+        @RestApiParam(name="project", type="long", paramType = RestApiParamType.QUERY, description = "If set, check if image is in project or not", required=false),
+        @RestApiParam(name="sortColumn", type="string", paramType = RestApiParamType.QUERY, description = "Column sort (created by default)", required=false),
+        @RestApiParam(name="sortDirection", type="string", paramType = RestApiParamType.QUERY, description = "Sort direction (desc by default)", required=false),
+        @RestApiParam(name="search", type="string", paramType = RestApiParamType.QUERY, description = "Original filename search filter (all by default)", required=false),
+        @RestApiParam(name="datatables", type="boolean", paramType=RestApiParamType.QUERY, description="", required=false),
     ])
     def list() {
         SecUser user = cytomineService.getCurrentUser()
@@ -162,7 +163,7 @@ class RestAbstractImageController extends RestController {
     /**
      * Get image thumb URL
      */
-    @RestApiMethod(description="Get a small image (thumb) for a specific image")
+    @RestApiMethod(description="Get a small image (thumb) for a specific image", extensions=["png", "jpg"])
     @RestApiParams(params=[
         @RestApiParam(name="id", type="long", paramType = RestApiParamType.PATH,description = "The image id")
     ])
@@ -187,7 +188,7 @@ class RestAbstractImageController extends RestController {
     /**
      * Get associated image
      */
-    @RestApiMethod(description="Get an associated image of a abstract image (e.g. label, macro, thumnail")
+    @RestApiMethod(description="Get an associated image of a abstract image (e.g. label, macro, thumbnail)", extensions=["png", "jpg"])
     @RestApiParams(params=[
     @RestApiParam(name="id", type="long", paramType = RestApiParamType.PATH,description = "The image id"),
     @RestApiParam(name="label", type="string", paramType = RestApiParamType.PATH,description = "The associated image label")
@@ -205,7 +206,7 @@ class RestAbstractImageController extends RestController {
     /**
      * Get image preview URL
      */
-    @RestApiMethod(description="Get an image (preview) for a specific image")
+    @RestApiMethod(description="Get an image (preview) for a specific image", extensions=["png", "jpg"])
     @RestApiParams(params=[
     @RestApiParam(name="id", type="long", paramType = RestApiParamType.PATH,description = "The image id")
     ])

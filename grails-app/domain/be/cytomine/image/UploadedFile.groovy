@@ -32,7 +32,7 @@ import org.restapidoc.annotation.RestApiObjectFields
  * Uploaded are temporaly instances, files related to them are placed
  * in a buffer space before being converted into the right format and copied to the storages
  */
-@RestApiObject(name = "uploaded file", description = "A file uploaded on the server, when finished, we create an 'abstract image' from this uploaded file")
+@RestApiObject(name = "Uploaded file", description = "A file uploaded on the server, when finished, we create an 'abstract image' from this uploaded file")
 class UploadedFile extends CytomineDomain implements Serializable{
 
     public static int UPLOADED = 0

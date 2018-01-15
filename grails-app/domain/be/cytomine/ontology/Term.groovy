@@ -29,7 +29,7 @@ import org.restapidoc.annotation.RestApiObjectFields
  * A term is a class that can be link to an annotation
  * A term is a part of ontology (list/tree of terms)
  */
-@RestApiObject(name = "term", description = "Term description")
+@RestApiObject(name = "Term", description = "Term description")
 class Term extends CytomineDomain implements Serializable, Comparable {
 
     @RestApiObjectField(description = "The term name")

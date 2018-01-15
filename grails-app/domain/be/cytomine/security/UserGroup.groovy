@@ -27,7 +27,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * A group is a set of user
  * UserGroup is the link between a group and a user in database
  */
-@RestApiObject(name = "user group", description="Link between a group and a user in database")
+@RestApiObject(name = "User group", description="Link between a group and a user in database")
 class UserGroup extends CytomineDomain {
 
     @RestApiObjectField(description = "The user id")

@@ -26,7 +26,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * A sample is a source of image
  * This is a real thing: blood, a mouse lung,...
  */
-@RestApiObject(name = "sample", description="A sample is a source of image. This is a real thing: blood, a mouse lung,...")
+@RestApiObject(name = "Sample", description="A sample is a source of image. This is a real thing: blood, a mouse lung,...")
 class Sample extends CytomineDomain implements Serializable{
 
     @RestApiObjectField(description = "Sample name")

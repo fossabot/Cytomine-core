@@ -27,7 +27,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * Info on user consultation of an image in a project
  * ex : User x consulted image y the 2013/01/01 at xxhyymin
  */
-@RestApiObject(name = "image consultation", description = "Each PersistentImageConsultation represents an user consultation to an imageInstance.")
+@RestApiObject(name = "Persistent image consultation", description = "Each PersistentImageConsultation represents an user consultation to an imageInstance.")
 class PersistentImageConsultation extends CytomineDomain {
 
     static mapWith = "mongo"

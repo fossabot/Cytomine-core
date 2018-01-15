@@ -32,7 +32,7 @@ import org.restapidoc.annotation.RestApiObjectFields
 /**
  * An annotation created by a user
  */
-@RestApiObject(name = "user annotation", description = "An annotation created by a user")
+@RestApiObject(name = "User annotation", description = "An annotation created by a user")
 class UserAnnotation extends AnnotationDomain implements Serializable {
 
     @RestApiObjectField(description = "User id that created this annotation")

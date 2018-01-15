@@ -16,7 +16,6 @@ package be.cytomine.social
 * limitations under the License.
 */
 
-import be.cytomine.AnnotationDomain
 import be.cytomine.CytomineDomain
 import be.cytomine.image.ImageInstance
 import be.cytomine.project.Project
@@ -34,23 +33,31 @@ class AnnotationAction extends CytomineDomain {
 
     static transients = ['id','updated','deleted','class']
 
-    static belongsTo = [user : SecUser, image : ImageInstance, project: Project, annotation: AnnotationDomain]
+    static belongsTo = [user : SecUser, image : ImageInstance, project: Project]
 
     @RestApiObjectField(description = "The user that did the action")
     SecUser user
-    @RestApiObjectField(description = "The annotation")
-    AnnotationDomain annotation
+
     @RestApiObjectField(description = "The image which contains the annotation")
     ImageInstance image
+
     @RestApiObjectField(description = "The project which contains the annotation")
     Project project
+
+    @RestApiObjectField(description = "The annotation class type (roi,user,algo,...)", useForCreation = false)
+    String annotationClassName
+
+    @RestApiObjectField(description = "The annotation id")
+    Long annotationIdent
+
     @RestApiObjectField(description = "The user that created the annotation")
     SecUser annotationCreator
+
     @RestApiObjectField(description = "The action on the annotation (Select, add, delete, update, ...)")
     String action
 
     static constraints = {
-        annotation (nullable:false)
+        annotationIdent (nullable:false)
         action (nullable: false, blank: false)
     }
 
@@ -72,7 +79,8 @@ class AnnotationAction extends CytomineDomain {
         returnArray.image = domain?.image?.id
         returnArray.project = domain?.project?.id
         returnArray.action = domain?.action
-        returnArray.annotation = domain?.annotation?.id
+        returnArray.annotationIdent = domain?.annotationIdent
+        returnArray.annotationClassName = domain?.annotationClassName
         returnArray.annotationCreator = domain?.annotationCreator?.id
         returnArray
     }

@@ -27,7 +27,7 @@ import org.restapidoc.annotation.RestApiParam
 import org.restapidoc.annotation.RestApiParams
 import org.restapidoc.pojo.RestApiParamType
 
-@RestApi(name = "storage abstract image services", description = "Methods for managing the link between an image and its storage list")
+@RestApi(name = "Image | server | storage abstract image services", description = "Methods for managing the link between an image and its storage list")
 class RestStorageAbstractImageController extends RestController {
 
     def storageAbstractImageService
@@ -46,7 +46,8 @@ class RestStorageAbstractImageController extends RestController {
      */
     @RestApiMethod(description="Delete a storage from an abstract image list)")
     @RestApiParams(params=[
-        @RestApiParam(name="id", type="long", paramType = RestApiParamType.PATH,description = "The abstractimage-storage id")
+        @RestApiParam(name="id", type="long", paramType = RestApiParamType.PATH, description = "The abstractimage-storage id"),
+        @RestApiParam(name="task", type="long", paramType=RestApiParamType.QUERY, description="The related task"),
     ])
     def delete() {
         try {

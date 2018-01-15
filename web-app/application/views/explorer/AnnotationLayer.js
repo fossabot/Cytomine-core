@@ -526,7 +526,7 @@ AnnotationLayer.prototype = {
                         self.removeSelection(false);
                     } else {
                         new AnnotationActionModel({
-                            annotation: evt.feature.attributes.idAnnotation,
+                            annotationIdent: evt.feature.attributes.idAnnotation,
                             action : "select"
                         }).save();
                         self.showPopup(map, evt);

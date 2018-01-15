@@ -23,7 +23,7 @@ import org.restapidoc.annotation.RestApiObjectField
 /**
  * A relation between terms (e.g. term1 PARENT term2)
  */
-@RestApiObject(name = "relation", description = "Type of relation between two terms (e.g. term1 PARENT term2)")
+@RestApiObject(name = "Relation", description = "Type of relation between two terms (e.g. term1 PARENT term2)")
 class Relation extends CytomineDomain implements Serializable {
 
     @RestApiObjectField(description = "The name of the relation")

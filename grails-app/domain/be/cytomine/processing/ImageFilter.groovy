@@ -27,7 +27,7 @@ import org.restapidoc.annotation.RestApiObjectFields
 /**
  * An image filter applies image operations (Binary, Eosin,...)
  */
-@RestApiObject(name = "image filter", description = "An image filter applies image operations (Binary, Eosin,...)")
+@RestApiObject(name = "Image filter", description = "An image filter applies image operations (Binary, Eosin,...)")
 class ImageFilter extends CytomineDomain {
 
     @RestApiObjectField(description = "The filter name",useForCreation = false)

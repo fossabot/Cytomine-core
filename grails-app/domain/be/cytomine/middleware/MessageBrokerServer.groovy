@@ -26,7 +26,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * Created by jconfetti on 04/02/15.
  * An instance of a message broker.
  */
-@RestApiObject(name = "message broker server", description = "An instance of a message broker.")
+@RestApiObject(name = "Message broker server", description = "An instance of a message broker.")
 class MessageBrokerServer extends CytomineDomain implements Serializable{
 
     @RestApiObjectField(description = "The host of the message broker")

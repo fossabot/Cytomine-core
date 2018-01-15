@@ -36,7 +36,7 @@ import org.restapidoc.pojo.RestApiParamType
  * Controller for reviewed annotation
  * A reviewed annotation is an annotation that is validate by a user with its term
  */
-@RestApi(name = "reviewed annotation services", description = "Methods for managing reviewed annotation, annotation validated by human")
+@RestApi(name = "Ontology | reviewed annotation services", description = "Methods for managing reviewed annotation, annotation validated by human")
 class RestReviewedAnnotationController extends RestController {
 
     def paramsService

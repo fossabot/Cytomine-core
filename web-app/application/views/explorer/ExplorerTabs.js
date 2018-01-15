@@ -57,11 +57,11 @@ var ExplorerTabs = Backbone.View.extend({
 
 
                 var millisecondsToWait = 250;
-               setTimeout(function() {
-                   // Whatever you want to do after the wait
-                   console.log("#"+id);
-                   $("#"+id).tab('show');
-               }, millisecondsToWait);
+                setTimeout(function() {
+                    // Whatever you want to do after the wait
+                    console.log("#"+id);
+                    $("#"+id).tab('show');
+                }, millisecondsToWait);
 
                 break;
             }
@@ -439,7 +439,7 @@ var ExplorerTabs = Backbone.View.extend({
             window.app.setNewImageWithPosition(imageToOpen,x,y,zoom);
         } else if(imageToOpen) {
             window.app.setNewImage(imageToOpen);
-       }
+        }
         window.app.controllers.browse.tabs.removeImageTab(idImageToClose,mode) //TODO support REVIEW TOO!!!!
 
         if(merge) {
@@ -488,7 +488,7 @@ var ExplorerTabs = Backbone.View.extend({
         tabs.append(_.template("<li class='custom-ui-project-images-tab' id='project-images-tab'><a href='#tabs-images-<%= idProject %>' data-toggle='tab'><i class='icon-picture' /> Images</a></li>", { idProject: window.app.status.currentProject}));
         tabs.append(_.template("<li class='custom-ui-project-imagegroups-tab' id='project-imagegroups-tab'><a href='#tabs-groups-<%= idProject %>' data-toggle='tab'><i class='icon-picture' /> ImageGroups</a></li>", { idProject: window.app.status.currentProject}));
         tabs.append(_.template("<li class='custom-ui-project-annotations-tab' id='project-annotations-tab' style='display:none;'><a href='#tabs-annotations-<%= idProject %>' data-toggle='tab'><i class='icon-pencil' /> Annotations</a></li>", { idProject: window.app.status.currentProject}));
-	    tabs.append(_.template("<li class='custom-ui-project-properties-tab' id='project-properties-tab' style='display:none;'><a class='annotationTabLink' href='#tabs-properties-<%= idProject %>' data-toggle='tab'><i class='icon-list' /> Properties</a></li>", { idProject: window.app.status.currentProject}));
+        tabs.append(_.template("<li class='custom-ui-project-properties-tab' id='project-properties-tab' style='display:none;'><a class='annotationTabLink' href='#tabs-properties-<%= idProject %>' data-toggle='tab'><i class='icon-list' /> Properties</a></li>", { idProject: window.app.status.currentProject}));
         tabs.append(_.template("<li class='custom-ui-project-jobs-tab' id='project-jobs-tab' style='display:none;'><a href='#tabs-algos-<%= idProject %>' data-toggle='tab'><i class='icon-tasks' /> Jobs</a></li>", { idProject: window.app.status.currentProject}));
         tabs.append(_.template("<li class='custom-ui-project-configuration-tab' id='project-configuration-tab' style='display:none;'><a href='#tabs-config-<%= idProject %>' data-toggle='tab'><i class='icon-wrench' /> Configuration</a></li>", { idProject: window.app.status.currentProject}));
         tabs.append(_.template("<li class='custom-ui-project-usersconfiguration-tab' id='project-usersconfiguration-tab' style='display:none;'><a href='#tabs-usersconfig-<%= idProject %>' data-toggle='tab'><i class='icon-wrench' /> Users</a></li>", { idProject: window.app.status.currentProject}));

@@ -24,7 +24,7 @@ import org.restapidoc.annotation.RestApiObjectFields
 /**
  * A cytomine human user
  */
-@RestApiObject(name = "user", description="A cytomine human user")
+@RestApiObject(name = "User", description="A cytomine human user")
 class User extends SecUser {
 
     transient springSecurityService

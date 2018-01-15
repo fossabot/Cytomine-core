@@ -32,7 +32,7 @@ import org.springframework.security.acls.domain.BasePermission
 
 import static org.springframework.security.acls.domain.BasePermission.*
 
-@RestApi(name = "acl services", description = "Methods for managing ACL, a permission for an user on a specific domain instance")
+@RestApi(name = "Security | acl services", description = "Methods for managing ACL, a permission for an user on a specific domain instance")
 class RestACLController extends RestController {
 
     def springSecurityService

@@ -124,4 +124,5 @@ class UserPositionService extends ModelService {
             results << [location : it["_id"].location, zoom : it["_id"].zoom, frequency : it.frequency, image : it.image]
         }
         return results
-    }}
+    }
+}

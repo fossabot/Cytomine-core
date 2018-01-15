@@ -97,7 +97,7 @@ class AnnotationValidatorTests {
         def json = JSON.parse(annotationToAdd.encodeAsJSON())
         json.location = LINE_STRING
         def result = UserAnnotationAPI.create(json.toString(), Infos.SUPERADMINLOGIN, Infos.SUPERADMINPASSWORD)
-        assert 400 == result.code
+        assert 200 == result.code
     }
 
     public void testAnnotationGeometryMultiLineString() {

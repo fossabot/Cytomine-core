@@ -27,23 +27,30 @@ import be.cytomine.image.server.Storage
 import be.cytomine.security.SecUser
 import be.cytomine.security.User
 import grails.converters.JSON
+import org.restapidoc.annotation.RestApi
+import org.restapidoc.annotation.RestApiMethod
+import org.restapidoc.annotation.RestApiParam
+import org.restapidoc.annotation.RestApiParams
+import org.restapidoc.pojo.RestApiParamType
 
-//TODO:APIDOC
+@RestApi(name="Image | server | storage services", description="Methods to manage storages")
 class RestStorageController extends RestController {
 
     def cytomineService
     def storageService
     def secUserService
 
-    /**
-     * List all project available for the current user
-     */
-    def list = {
+    @RestApiMethod(description="List all storages", listing=true)
+    def list() {
         log.info 'listing storages'
         responseSuccess(storageService.list())
     }
 
-    def listByMime = {
+    @RestApiMethod(description="List all storages for the current user and the provided mime type", listing=true)
+    @RestApiParams(params=[
+            @RestApiParam(name="mimeType", type="String", paramType = RestApiParamType.QUERY, description = "The mime type")
+    ])
+    def listByMime() {
         log.info 'listing storages by mime/user'
         def currentUser = cytomineService.currentUser
 
@@ -72,10 +79,11 @@ class RestStorageController extends RestController {
         }
     }
 
-    /**
-     * Get a project
-     */
-    def show = {
+    @RestApiMethod(description="Get a storage")
+    @RestApiParams(params=[
+            @RestApiParam(name="id", type="long", paramType = RestApiParamType.PATH, description = "The storage id")
+    ])
+    def show() {
         Storage storage = storageService.read(params.long('id'))
         if (storage) {
             responseSuccess(storage)
@@ -84,17 +92,16 @@ class RestStorageController extends RestController {
         }
     }
 
-    /**
-     * Add a new storage to cytomine
-     */
-    def add = {
+    @RestApiMethod(description="Add a new storage")
+    def add() {
         add(storageService, request.JSON)
     }
 
-    /**
-     * Update a storage
-     */
-    def update = {
+    @RestApiMethod(description="Update a storage")
+    @RestApiParams(params=[
+            @RestApiParam(name="id", type="long", paramType = RestApiParamType.PATH, description = "The storage id")
+    ])
+    def update() {
         try {
             def domain = storageService.retrieve(request.JSON)
             def result = storageService.update(domain,request.JSON)
@@ -105,11 +112,11 @@ class RestStorageController extends RestController {
         }
     }
 
-
-    /**
-     * Delete a storage
-     */
-    def delete = {
+    @RestApiMethod(description="Delete a storage")
+    @RestApiParams(params=[
+            @RestApiParam(name="id", type="long", paramType = RestApiParamType.PATH, description = "The storage id")
+    ])
+    def delete() {
         try {
             def domain = storageService.retrieve(JSON.parse("{id : $params.id}"))
             def result = storageService.delete(domain,transactionService.start(),null,true)
@@ -123,7 +130,11 @@ class RestStorageController extends RestController {
     /**
      * Create a storage for user with default parameters
      */
-    def create = {
+    @RestApiMethod(description="Create a storage for a user with default parameter values")
+    @RestApiParams(params=[
+            @RestApiParam(name="user", type="long", paramType = RestApiParamType.PATH, description = "The user id")
+    ])
+    def create() {
         def id = params.long('user')
         SecUser user = secUserService.read(id)
         if (user instanceof User) {

@@ -22,7 +22,7 @@ import be.cytomine.utils.JSONUtils
 import org.restapidoc.annotation.RestApiObject
 import org.restapidoc.annotation.RestApiObjectField
 
-@RestApiObject(name = "storage abstract image", description="A link between a storage and some images")
+@RestApiObject(name = "Storage abstract image", description="A link between a storage and some images")
 class StorageAbstractImage extends CytomineDomain {
 
     @RestApiObjectField(description = "The storage id")

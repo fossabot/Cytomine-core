@@ -35,7 +35,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller for annotation created by user
  */
-@RestApi(name = "user annotation services", description = "Methods for managing an annotation created by a human user")
+@RestApi(name = "Ontology | user annotation services", description = "Methods for managing an annotation created by a human user")
 class RestUserAnnotationController extends RestController {
 
     def userAnnotationService

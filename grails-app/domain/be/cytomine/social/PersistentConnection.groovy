@@ -26,7 +26,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * Info on last user connection for a project
  * User x connect to poject y the 2013/01/01 at xxhyymin
  */
-@RestApiObject(name = "persistent connection", description = "A Connection is recorded all long the user is connected.")
+@RestApiObject(name = "Persistent connection", description = "A Connection is recorded all long the user is connected.")
 class PersistentConnection extends CytomineDomain{
 
     static mapWith = "mongo"

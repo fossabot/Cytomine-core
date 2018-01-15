@@ -26,7 +26,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * Info on user connection for a project
  * ex : User x connect to project y the 2013/01/01 at time y
  */
-@RestApiObject(name = "project connection", description = "Each PersistentProjectConnection represents an user connection to a project.")
+@RestApiObject(name = "Persistent project connection", description = "Each PersistentProjectConnection represents an user connection to a project.")
 class PersistentProjectConnection extends CytomineDomain implements Cloneable {
 
     static mapWith = "mongo"

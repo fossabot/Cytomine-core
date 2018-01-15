@@ -26,7 +26,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * Relation between a term 1 and a term 2
  */
 //@RestApiObject(name = "relationTerm", description = "Relation Term description", show = true)
-@RestApiObject(name = "relation", description = "Relation between a term 1 , a term 2 and a relantion domain (e.g. term1 PARENT term2)")
+@RestApiObject(name = "Relation term", description = "Relation between a term 1 , a term 2 and a relantion domain (e.g. term1 PARENT term2)")
 class RelationTerm extends CytomineDomain implements Serializable {
 
     static names = [PARENT: "parent", SYNONYM: "synonyme"]

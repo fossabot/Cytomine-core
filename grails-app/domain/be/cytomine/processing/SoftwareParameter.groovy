@@ -26,7 +26,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * A parameter for a software.
  * It's a template to create job parameter.
  */
-@RestApiObject(name = "software parameter", description = "A parameter for a software. It's a template to create job parameter. When job is init, we create job parameter list based on software parameter list.")
+@RestApiObject(name = "Software parameter", description = "A parameter for a software. It's a template to create job parameter. When job is init, we create job parameter list based on software parameter list.")
 class SoftwareParameter extends CytomineDomain {
 
     /**

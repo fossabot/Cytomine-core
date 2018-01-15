@@ -28,7 +28,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller for sample (part of 'source' that has been scan to image)
  */
-@RestApi(name = "sample services", description = "Methods for managing a sample, part of 'source' that has been scan to image")
+@RestApi(name = "Laboratory | sample services", description = "Methods for managing a sample, part of 'source' that has been scan to image")
 class RestSampleController extends RestController {
 
     def sampleService

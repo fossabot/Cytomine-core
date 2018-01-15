@@ -31,7 +31,7 @@ import org.restapidoc.pojo.RestApiParamType
  * Controller for software project link
  * A software may be used by some project
  */
-@RestApi(name = "job template annotation services", description = "Methods for managing a link between a job template and an annotation (roi or other type)")
+@RestApi(name = "Processing | job template annotation services", description = "Methods for managing a link between a job template and an annotation (roi or other type)")
 class RestJobTemplateAnnotationController extends RestController{
 
     def jobTemplateAnnotationService

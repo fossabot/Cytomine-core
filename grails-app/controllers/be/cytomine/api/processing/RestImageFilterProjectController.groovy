@@ -28,7 +28,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller that handle the link between a project and a image filter
  */
-@RestApi(name = "image filter project services", description = "Methods for managing image filter project, a link between an image filter and a project")
+@RestApi(name = "Processing | image filter project services", description = "Methods for managing image filter project, a link between an image filter and a project")
 class RestImageFilterProjectController extends RestController {
 
     def imageFilterProjectService

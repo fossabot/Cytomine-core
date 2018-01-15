@@ -30,7 +30,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller to manage user in group
  */
-@RestApi(name = "user group services", description = "Methods for managing a user in groups")
+@RestApi(name = "Security | user group services", description = "Methods for managing a user in groups")
 class RestUserGroupController extends RestController {
 
     def userGroupService

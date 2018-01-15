@@ -380,8 +380,8 @@ cytomine.customUI.project = [
         "project-properties-tab":["ADMIN_PROJECT":true,"CONTRIBUTOR_PROJECT":true],
         "project-jobs-tab":["ADMIN_PROJECT":false,"CONTRIBUTOR_PROJECT":false],
         "project-configuration-tab":["ADMIN_PROJECT":true,"CONTRIBUTOR_PROJECT":false],
-        "project-usersconfiguration-tab":["ADMIN_PROJECT":true,"CONTRIBUTOR_PROJECT":false]
-        //"project-explore-spectra-panel":["ADMIN_PROJECT":false,"CONTRIBUTOR_PROJECT":false]
+        "project-usersconfiguration-tab":["ADMIN_PROJECT":true,"CONTRIBUTOR_PROJECT":false],
+        "project-explore-spectra-panel":["ADMIN_PROJECT":false,"CONTRIBUTOR_PROJECT":false]
 ]
 
 environments {

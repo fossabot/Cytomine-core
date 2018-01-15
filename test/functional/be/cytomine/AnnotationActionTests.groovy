@@ -26,9 +26,60 @@ class AnnotationActionTests {
 
     void testAddAction() {
         def annotation = BasicInstanceBuilder.getUserAnnotation()
-        def json = JSON.parse("{annotation:${annotation.id},action:Test}");
+        def json = JSON.parse("{annotationIdent:${annotation.id},action:Test}");
 
         def result = AnnotationActionAPI.create(json.toString(),Infos.SUPERADMINLOGIN, Infos.SUPERADMINPASSWORD)
         assert 200 == result.code
+    }
+
+    void testList() {
+        def image = BasicInstanceBuilder.getImageInstance()
+        def annotation = BasicInstanceBuilder.getUserAnnotation()
+        def json = JSON.parse("{image:${image.id}, annotationIdent:${annotation.id}, action:Test}")
+
+        def result = AnnotationActionAPI.create(json.toString(),Infos.SUPERADMINLOGIN, Infos.SUPERADMINPASSWORD)
+        assert 200 == result.code
+
+        Long creator = JSON.parse(result.data).user
+
+        result = AnnotationActionAPI.listByImage(image.id,Infos.SUPERADMINLOGIN, Infos.SUPERADMINPASSWORD)
+        assert 200 == result.code
+        assert JSON.parse(result.data).collection.size() == 1
+
+        result = AnnotationActionAPI.listByImageAndUser(image.id, creator, Infos.SUPERADMINLOGIN, Infos.SUPERADMINPASSWORD)
+        assert 200 == result.code
+        assert JSON.parse(result.data).collection.size() == 1
+
+        result = AnnotationActionAPI.listByImageAndUser(image.id, BasicInstanceBuilder.user1.id, Infos.SUPERADMINLOGIN, Infos.SUPERADMINPASSWORD)
+        assert 200 == result.code
+        assert JSON.parse(result.data).collection.size() == 0
+    }
+
+    void testListAfterThan() {
+        def image = BasicInstanceBuilder.getImageInstance()
+        def annotation = BasicInstanceBuilder.getUserAnnotation()
+        def json = JSON.parse("{image:${image.id}, annotation:${annotation.id}, action:Test}")
+
+        def result = AnnotationActionAPI.create(json.toString(),Infos.SUPERADMINLOGIN, Infos.SUPERADMINPASSWORD)
+        assert 200 == result.code
+
+        Long created = Long.parseLong(JSON.parse(result.data).created)
+        Long creator = JSON.parse(result.data).user
+
+        result = AnnotationActionAPI.listByImage(image.id,Infos.SUPERADMINLOGIN, Infos.SUPERADMINPASSWORD, created)
+        assert 200 == result.code
+        assert JSON.parse(result.data).collection.size() == 1
+
+        result = AnnotationActionAPI.listByImageAndUser(image.id, creator, Infos.SUPERADMINLOGIN, Infos.SUPERADMINPASSWORD, created)
+        assert 200 == result.code
+        assert JSON.parse(result.data).collection.size() == 1
+
+        result = AnnotationActionAPI.listByImage(image.id,Infos.SUPERADMINLOGIN, Infos.SUPERADMINPASSWORD, created+1)
+        assert 200 == result.code
+        assert JSON.parse(result.data).collection.size() == 0
+
+        result = AnnotationActionAPI.listByImageAndUser(image.id, creator, Infos.SUPERADMINLOGIN, Infos.SUPERADMINPASSWORD, created+1)
+        assert 200 == result.code
+        assert JSON.parse(result.data).collection.size() == 0
     }
 }

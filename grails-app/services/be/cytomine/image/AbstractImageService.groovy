@@ -242,7 +242,7 @@ class AbstractImageService extends ModelService {
         String imageServerURL = abstractImage.getRandomImageServerURL()
         String fif = URLEncoder.encode(abstractImage.absolutePath, "UTF-8")
         String mimeType = abstractImage.mimeType
-        return "$imageServerURL/image/crop.png?fif=$fif&mimeType=$mimeType&$queryString&resolution=${abstractImage.resolution}" //&scale=$scale
+        return "$imageServerURL/image/crop.$params.format?fif=$fif&mimeType=$mimeType&$queryString&resolution=${abstractImage.resolution}" //&scale=$scale
     }
 
     def getCropIMSUrl(params) {
@@ -251,7 +251,7 @@ class AbstractImageService extends ModelService {
         String imageServerURL = abstractImage.getRandomImageServerURL()
         String fif = URLEncoder.encode(abstractImage.absolutePath, "UTF-8")
         String mimeType = abstractImage.mimeType
-        String url = "$imageServerURL/image/crop.png?fif=$fif&mimeType=$mimeType"
+        String url = "$imageServerURL/image/crop.$params.format?fif=$fif&mimeType=$mimeType"
 
         String query = params.collect { key, value ->
             if (value instanceof String)

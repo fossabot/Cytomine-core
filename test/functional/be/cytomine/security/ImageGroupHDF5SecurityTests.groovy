@@ -1,7 +1,4 @@
 package be.cytomine.security
-
-import be.cytomine.image.AbstractImage
-
 /*
 * Copyright (c) 2009-2016. Authors: see NOTICE file.
 *
@@ -42,10 +39,10 @@ class ImageGroupHDF5SecurityTests extends SecurityTestsAbstract{
         User admin = getUserAdmin()
 
         //Create new project (user1)
-        def result = ProjectAPI.create(BasicInstanceBuilder.getProjectNotExist().encodeAsJSON(),SecurityTestsAbstract.USERNAME1,SecurityTestsAbstract.PASSWORD1)
+        def result = ProjectAPI.create(BasicInstanceBuilder.getProjectNotExist().encodeAsJSON(), USERNAME1,PASSWORD1)
         assert 200 == result.code
         Project project = result.data
-        def resAddUser = ProjectAPI.addUserProject(project.id,user2.id,SecurityTestsAbstract.USERNAME1,SecurityTestsAbstract.PASSWORD1)
+        def resAddUser = ProjectAPI.addUserProject(project.id,user2.id,USERNAME1,PASSWORD1)
         Infos.printRight(project)
         assert 200 == resAddUser.code
 
@@ -55,29 +52,26 @@ class ImageGroupHDF5SecurityTests extends SecurityTestsAbstract{
         image.project = project
 
         //Init image group
-        ImageGroup imageGroup = BasicInstanceBuilder.getImageGroupNotExist(project, false);
-        result = ImageGroupAPI.create(imageGroup.encodeAsJSON(), SecurityTestsAbstract.USERNAME1, SecurityTestsAbstract.PASSWORD1)
+        ImageGroup imageGroup = BasicInstanceBuilder.getImageGroupNotExist(project, false)
+        result = ImageGroupAPI.create(imageGroup.encodeAsJSON(), USERNAME1, PASSWORD1)
         imageGroup = ImageGroup.get(result.data.id)
 
         //Init Imagegroup H5
-        ImageGroupHDF5 imageGroupHDF5 = BasicInstanceBuilder.getImageGroupHDF5NotExist(false);
+        ImageGroupHDF5 imageGroupHDF5 = BasicInstanceBuilder.getImageGroupHDF5NotExist(false)
         imageGroupHDF5.group = imageGroup
-        imageGroupHDF5.filenames = "/data/28/hdf5_35398"
+        imageGroupHDF5.filename = imageGroup.id + ".h5"
 
         //check if user 2 can access ImageGrouphdf5
-        result = ImageGroupHDF5API.create(imageGroupHDF5.encodeAsJSON(), SecurityTestsAbstract.USERNAME2, SecurityTestsAbstract.PASSWORD2)
-        assert 400 == result.code
+//        result = ImageGroupHDF5API.create(imageGroupHDF5.encodeAsJSON(), USERNAME2, PASSWORD2)
+//        assert 400 == result.code
 
         BasicInstanceBuilder.getImageSequence(image, 0, 0 , 0, 0, imageGroup,true)
 
-        result = ImageGroupHDF5API.create(imageGroupHDF5.encodeAsJSON(), SecurityTestsAbstract.USERNAME2, SecurityTestsAbstract.PASSWORD2)
+        result = ImageGroupHDF5API.create(imageGroupHDF5.encodeAsJSON(), USERNAME2, PASSWORD2)
         assert 200 == result.code
         Long idImageGroup = result.data.id
-        assert (200 == ImageGroupHDF5API.show(idImageGroup,SecurityTestsAbstract.USERNAME2,SecurityTestsAbstract.PASSWORD2).code)
+        assert (200 == ImageGroupHDF5API.show(idImageGroup,USERNAME2,PASSWORD2).code)
 
         //assert (403 == ImageGroupAPI.show(idImageGroup,SecurityTestsAbstract.USERNAME3,SecurityTestsAbstract.PASSWORD3).code)
     }
-
-
-
 }

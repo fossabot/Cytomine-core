@@ -27,7 +27,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller for software: application that can be launch (job)
  */
-@RestApi(name = "software services", description = "Methods for managing software, application that can be launch (job)")
+@RestApi(name = "Processing | software services", description = "Methods for managing software, application that can be launch (job)")
 class RestSoftwareController extends RestController {
 
     def softwareService

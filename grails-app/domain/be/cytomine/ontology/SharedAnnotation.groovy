@@ -19,6 +19,7 @@ package be.cytomine.ontology
 import be.cytomine.CytomineDomain
 import be.cytomine.security.User
 import be.cytomine.utils.JSONUtils
+import org.restapidoc.annotation.RestApiObject
 import org.restapidoc.annotation.RestApiObjectField
 
 /**
@@ -26,6 +27,7 @@ import org.restapidoc.annotation.RestApiObjectField
  * (e.g. is it the good term?, ...)
  * Receiver user can see the comment and add answer
  */
+@RestApiObject(name="Shared annotation", description = "A shared annotation is a comment on a specific annotation.")
 class SharedAnnotation extends CytomineDomain {
 
     @RestApiObjectField(description = "User that write the comment")

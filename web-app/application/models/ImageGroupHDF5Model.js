@@ -26,11 +26,11 @@ var ImageGroupHDF5Model = Backbone.Model.extend({
     url: function () {
         var base = 'api';
         var format = '.json';
-        if (this.isNew()) return base + "/imagegrouph5" + format;
+        if (this.isNew()) return base + "/imagegroupHDF5" + format;
         if(this.group == undefined)
-            return base + "/imagegrouph5/" + this.id + "" + format;
+            return base + "/imagegroupHDF5/" + this.id + "" + format;
         else
-            return base + "/imagegroup/" + this.group + "/imagegrouph5" + format;
+            return base + "/imagegroup/" + this.group + "/imagegroupHDF5" + format;
     },
 
     initialize: function (options) {
@@ -43,9 +43,9 @@ var ImageGroupHDF5Model = Backbone.Model.extend({
 
 var ImageGroupSpectraModel = Backbone.Model.extend({
    url: function () {
-       var base = 'api/imagegrouph5';
+       var base = 'api/imagegroupHDF5';
        var format = '.json';
-       return base + "/" + this.group + "/" + this.x + "/" + this.y + "/pxl" + format;
+       return base + "/" + this.group + "/" + this.x + "/" + this.y + "/pixel" + format;
    },
 
     initialize: function(options){

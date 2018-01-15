@@ -20,7 +20,7 @@ import be.cytomine.CytomineDomain
 import org.restapidoc.annotation.RestApiObject
 import org.restapidoc.annotation.RestApiObjectField
 
-@RestApiObject(name = "config", description = "A key-value entry that save the global config of the application")
+@RestApiObject(name = "Config", description = "A key-value entry that save the global config of the application")
 class Config extends CytomineDomain implements Serializable {
 
     @RestApiObjectField(description = "The property key")

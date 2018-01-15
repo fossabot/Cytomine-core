@@ -33,7 +33,7 @@ import org.restapidoc.pojo.RestApiParamType
 /**
  * Controller to manage user role
  */
-@RestApi(name = "sec user sec role services", description = "Methods for managing a user role")
+@RestApi(name = "Security | sec user sec role services", description = "Methods for managing a user role")
 class RestSecUserSecRoleController extends RestController {
 
     def secUserService

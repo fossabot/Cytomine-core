@@ -35,7 +35,7 @@ import java.text.SimpleDateFormat
 /**
  * Handle HTTP Requests for CRUD operations on the User Job domain class.
  */
-@RestApi(name = "user job services", description = "Methods for managing a user job, a user created for a software execution")
+@RestApi(name = "Security | user job services", description = "Methods for managing a user job, a user created for a software execution")
 class RestUserJobController extends RestController {
 
     def springSecurityService

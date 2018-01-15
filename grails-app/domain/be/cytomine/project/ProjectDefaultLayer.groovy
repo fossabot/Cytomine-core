@@ -27,7 +27,7 @@ import org.restapidoc.annotation.RestApiObjectField
 /**
  * A ProjectDefaultLayer is a layer in the default list of the visible layer for all the image of the project
  */
-@RestApiObject(name = "ProjectDefaultLayer", description = "A ProjectDefaultLayer is a layer in the default list of the visible layer for all the image of the project")
+@RestApiObject(name = "Project default layer", description = "A Project default layer is a layer in the default list of the visible layer for all the image of the project")
 class ProjectDefaultLayer extends CytomineDomain {
 
     @RestApiObjectField(description = "The user layer")
