@@ -322,6 +322,9 @@ class RestAbstractImageController extends RestController {
 
             def images = imageSequenceService.list(group)
 
+            if(merge.equals("channel")){
+                images = images.findAll{it.zStack == sequence.zStack && it.time == sequence.time}
+            }
             log.info "all image for this group=$images"
 
 
@@ -357,8 +360,8 @@ class RestAbstractImageController extends RestController {
 
             def urls = []
 
-            (0..5).each {
-                urls << servers.get(myRandomizer.nextInt(servers.size())).url +"/"+ url
+            servers.each {
+                urls << it.url +"/"+ url
             }
 
             //retrieve all image instance (same sequence)
