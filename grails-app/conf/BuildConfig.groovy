@@ -66,12 +66,12 @@ grails.project.dependency.resolution = {
         mavenLocal()
         mavenCentral()
         // For Geb snapshot
-        mavenRepo "https://nexus.codehaus.org/content/repositories/snapshots"
-        mavenRepo 'https://noams.artifactoryonline.com/noams/grails-jaxrs-plugin-snapshots'
+        mavenRepo "https://oss.sonatype.org/content/repositories/codehaus-snapshots/"
+        //mavenRepo 'https://noams.artifactoryonline.com/noams/grails-jaxrs-plugin-snapshots'
         mavenRepo 'http://maven.restlet.org'
         mavenRepo "http://www.hibernatespatial.org/repository"
-        mavenRepo "http://repository.ow2.org/nexus/content/repositories/public"
-        mavenRepo "http://repository.ow2.org/nexus/content/repositories/ow2-legacy"
+        //mavenRepo "http://repository.ow2.org/nexus/content/repositories/public"
+        //mavenRepo "http://repository.ow2.org/nexus/content/repositories/ow2-legacy"
         mavenRepo "http://repo.grails.org/grails/core"
     }
     dependencies {
