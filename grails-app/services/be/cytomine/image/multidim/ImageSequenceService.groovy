@@ -181,6 +181,8 @@ class ImageSequenceService extends ModelService {
     def abstractImageService
     def deleteDependentImageInstance(ImageSequence domain, Transaction transaction, Task task = null) {
         imageInstanceService.delete(domain.image,transaction,null,false)
+        abstractImageService.delete(domain.image.baseImage)
+        abstractImageService.deleteFile(domain.image.baseImage)
     }
 
     def getStringParamsI18n(def domain) {

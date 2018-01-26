@@ -424,7 +424,17 @@ class AbstractImageService extends ModelService {
 
     def uploadedFileService
     def deleteFile(AbstractImage ai){
-        uploadedFileService.delete(UploadedFile.findByImage(ai))
+        UploadedFile uf = UploadedFile.findByImage(ai)
+        uploadedFileService.delete(uf)
+
+        while(uf.parent){
+            if(UploadedFile.countByParentAndDeletedIsNull(uf.parent) == 0){
+                uploadedFileService.delete(uf.parent)
+                uf = uf.parent
+            } else {
+                break
+            }
+        }
     }
 
     def getStringParamsI18n(def domain) {
