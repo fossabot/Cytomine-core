@@ -466,8 +466,9 @@ class RestImageInstanceController extends RestController {
 
     def download() {
         Long id = params.long("id")
+        Boolean parent = params.boolean("parent", false)
         ImageInstance imageInstance = imageInstanceService.read(id)
-        String downloadURL = abstractImageService.downloadURI(imageInstance.baseImage)
+        String downloadURL = abstractImageService.downloadURI(imageInstance.baseImage, parent)
         if (downloadURL) {
             log.info "redirect $downloadURL"
             redirect (url : downloadURL)

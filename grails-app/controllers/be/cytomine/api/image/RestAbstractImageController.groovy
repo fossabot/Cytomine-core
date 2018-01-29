@@ -218,7 +218,7 @@ class RestAbstractImageController extends RestController {
     }
 
     def download() {
-        String url = abstractImageService.downloadURI(abstractImageService.read(params.long("id")))
+        String url = abstractImageService.downloadURI(abstractImageService.read(params.long("id")), params.boolean("parent", false))
         log.info "redirect url"
         redirect (url : url)
     }
