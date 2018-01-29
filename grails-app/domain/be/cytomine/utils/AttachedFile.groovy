@@ -83,7 +83,7 @@ class AttachedFile extends CytomineDomain {
         returnArray['domainIdent'] = domain?.domainIdent
         returnArray['domainClassName'] = domain?.domainClassName
         returnArray['url'] = "/api/attachedfile/${domain?.id}/download"
-        returnArray['filename'] = domain?.domainClassName
+        returnArray['filename'] = domain?.filename
         return returnArray
     }
 }
