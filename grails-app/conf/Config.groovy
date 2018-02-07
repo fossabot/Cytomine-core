@@ -113,12 +113,12 @@ environments {
         grails.resources.adhoc.patterns = ['/images/*', '/css/jsondoc/*', '/js/*', '/plugins/*']
         grails.readOnlyProjectsByDefault = true
         grails.adminPassword="admin"
-        grails.ImageServerPrivateKey=""
-        grails.ImageServerPublicKey=""
-        grails.adminPrivateKey="XXX"
-        grails.adminPublicKey="XXX"
-        grails.superAdminPrivateKey="X"
-        grails.superAdminPublicKey="X"
+        grails.ImageServerPrivateKey="128290dc-2e10-4885-8c87-3be1e6dc3764"
+        grails.ImageServerPublicKey="128290dc-2e10-4885-8c87-3be1e6dc3764"
+        grails.adminPrivateKey="128290dc-2e10-4885-8c87-3be1e6dc3764"
+        grails.adminPublicKey="128290dc-2e10-4885-8c87-3be1e6dc3764"
+        grails.superAdminPrivateKey="128290dc-2e10-4885-8c87-3be1e6dc3764"
+        grails.superAdminPublicKey="128290dc-2e10-4885-8c87-3be1e6dc3764"
     }
     test {
         grails.serverURL = "http://localhost:8090"
