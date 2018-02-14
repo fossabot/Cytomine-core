@@ -46,7 +46,14 @@ export default {
     },
     mapIndex() {
         return findIndex(this.maps, map => map.id === this.currentMap.id);
-    }
+    },
+    imageId() {
+      let route = window.location.hash;
+      let intermediate = route.indexOf("-", route.indexOf("-") + 1),
+          subFrom = route.indexOf("-", intermediate + 1),
+          subTo = route.indexOf("-", subFrom + 1);
+      return route.substring(subFrom + 1, subTo);
+    },
   },
   watch: {
     // Watches these values
