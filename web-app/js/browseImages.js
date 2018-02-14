@@ -1,15 +1,19 @@
 import Vue from 'vue'
-import ImagePanel from './ImagePanel.vue'
+import ImagesBrowser from './ImagesBrowser.vue'
 
-function initBrowseImages() {
+import VueOpenLayers from 'vuejs-openlayers'
+
+Vue.use(VueOpenLayers);
+
+function initImagesBrowser() {
   if (document.getElementById('maps')) {
     new Vue({
       el: '#maps',
-      render: h => h(ImagePanel)
+      render: h => h(ImagesBrowser)
     })
   } else {
-    setTimeout(initBrowseImages, 15);
+    setTimeout(initImagesBrowser, 15);
   }
 }
 
-initBrowseImages();
+initImagesBrowser();
