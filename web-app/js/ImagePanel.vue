@@ -4,6 +4,6 @@
 
 <script>
 export default {
-  name: 'map',
+  name: 'imagePanel',
 }
 </script>

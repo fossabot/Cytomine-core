@@ -492,6 +492,6 @@ body {
 
 </g:if>
 
-<script src="/lib/maps.js"></script>
+<script src="/lib/browse-images.js"></script>
 
 </html>

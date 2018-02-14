@@ -2,11 +2,11 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './web-app/js/maps.js',
+  entry: './web-app/js/browseImages.js',
   output: {
     path: path.resolve(__dirname, './web-app/lib'),
     publicPath: '/lib/',
-    filename: 'maps.js'
+    filename: 'browse-images.js'
   },
   module: {
     rules: [
