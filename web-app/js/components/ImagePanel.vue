@@ -16,6 +16,7 @@
 
 <script>
 import findIndex from 'lodash.findindex';
+import Zoomify from 'ol/source/zoomify';
 
 export default {
   name: 'ImagePanel',
@@ -53,6 +54,10 @@ export default {
           subFrom = route.indexOf("-", intermediate + 1),
           subTo = route.indexOf("-", subFrom + 1);
       return route.substring(subFrom + 1, subTo);
+    },
+    imageUrl() {
+        // return 'http://localhost-ims/image/tile?zoomify=/data/33//1518613420620/LUNG1_pyr.tif/&tileGroup=0&z={z}&x={x}&y={y}&channels=0&layer=0&timeframe=0&mimeType=image/pyrtiff';
+        return 'http://localhost-core:8080/api/imageinstance/' + this.imageId + '/camera_url-{x}-{y}-500-500.json';
     },
   },
   watch: {
@@ -101,6 +106,8 @@ export default {
     }
   },
   mounted() {
+    var imgWidth = 9911;
+    var imgHeight = 6100;
     // Init map
     this.$openlayers.init({
       element: this.currentMap.id,
@@ -113,7 +120,12 @@ export default {
       enableScaleLine: true,  
     })
     // Adds layer
-    this.$openlayers.addLayer({element: this.currentMap.id, name: 'Map', type: "OSM"})
+    this.$openlayers.addLayer({element: this.currentMap.id, name: 'Map', type: "XYZ", url: this.imageUrl});
+    // this.$openlayers.getLayer(this.currentMap.id, 'Map').setSource(new Zoomify({
+    //     url: this.imageUrl,
+    //     size: [500, 500],
+    //     crossOrigin: 'anonymous'
+    // }))
   }
 }
 </script>

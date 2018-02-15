@@ -725,6 +725,7 @@ BrowseImageView = Backbone.View.extend({
                 zoomify_urls,
                 new OpenLayers.Size(metadata.width, metadata.height)
             );
+            console.log(zoomify_urls);
             baseLayer.getURL = function (bounds) {
                 bounds = this.adjustBounds(bounds);
                 var res = this.getServerResolution();
