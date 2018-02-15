@@ -27,10 +27,10 @@ AnnotationLayerUtils.createFeatureFromAnnotation = function (annotation) {
     var count = annotation.count ? annotation.count : "";
     var ratio = annotation.ratio ? annotation.ratio : undefined
     var terms = annotation.term || annotation.get('term');
-    var format = new OpenLayers.Format.WKT();
+    var format = new ol.format.WKT();
     var point = format.read(location);
     var geom = point.geometry;
-    var feature = new OpenLayers.Feature.Vector(geom, {zIndex : 999});
+    var feature = new ol.Feature({geometry: geom});
 
 
     if(window.app.status.currentProjectModel.get('blindMode')) {

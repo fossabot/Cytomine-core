@@ -175,33 +175,34 @@ BrowseImageView = Backbone.View.extend({
     /**
      * Check init options and call appropriate methods
      */
-    registerEventTile: function (layer) {
+    // registerEventTile: function (layer) {
 
-        layer.events.register("loadstart", layer, function () {
-        });
+    //     layer.events.register("loadstart", layer, function () {
+    //     });
 
-        layer.events.register("tileloaded", layer, function (evt) {
-            return; //disabled but works
-            /*var ctx = evt.tile.getCanvasContext();
-             if (ctx) {
-             var imgd = ctx.getImageData(0, 0, evt.tile.size.w, evt.tile.size.h);
+    //     layer.events.register("tileloaded", layer, function (evt) {
+    //         return; //disabled but works
+    //         /*var ctx = evt.tile.getCanvasContext();
+    //          if (ctx) {
+    //          var imgd = ctx.getImageData(0, 0, evt.tile.size.w, evt.tile.size.h);
 
-             ctx.putImageData(imgd, 0, 0);
-             evt.tile.imgDiv.removeAttribute("crossorigin");
-             evt.tile.imgDiv.src = ctx.canvas.toDataURL();
+    //          ctx.putImageData(imgd, 0, 0);
+    //          evt.tile.imgDiv.removeAttribute("crossorigin");
+    //          evt.tile.imgDiv.src = ctx.canvas.toDataURL();
 
-             }*/
-        });
+    //          }*/
+    //     });
 
-        layer.events.register("loadend", layer, function () {
-        });
+    //     layer.events.register("loadend", layer, function () {
+    //     });
 
-    },
+    // },
 
     show: function (options) {
         var self = this;
         if (this.position) {
-            self.map.moveTo(new OpenLayers.LonLat(self.position.x, self.position.y), Math.max(0, self.position.zoom));
+            self.map.getView().setCenter([self.position.x, self.position.y]);
+            self.map.getView().setZoom(Math.max(0, self.position.zoom));
         }
 
 
@@ -287,7 +288,7 @@ BrowseImageView = Backbone.View.extend({
      */
     goToAnnotation: function (layer, annotation) {
         var self = this;
-        var format = new OpenLayers.Format.WKT();
+        var format = new ol.format.WKT();
         var point = format.read(annotation.get("location"));
         var geom = point.geometry;
         var bounds = geom.getBounds();
@@ -296,7 +297,7 @@ BrowseImageView = Backbone.View.extend({
         var featureHeight = bounds.top - bounds.bottom;
         var windowWidth = $(window).width();
         var windowHeight = $(window).height();
-        var zoom = self.map.getNumZoomLevels() - this.nbDigitialZoom;
+        var zoom = self.map.getView().getMaxZoom()() - this.nbDigitialZoom;
         var tmpWidth = featureWidth;
         var tmpHeight = featureHeight;
         while ((tmpWidth > windowWidth) || (tmpHeight > windowHeight)) {
@@ -305,10 +306,12 @@ BrowseImageView = Backbone.View.extend({
             zoom--;
         }
         zoom = Math.max(0, zoom - 1);
-        self.map.moveTo(new OpenLayers.LonLat(geom.getCentroid().x, geom.getCentroid().y), Math.max(0, zoom));
+        self.map.getView().setCenter([geom.getCentroid().x, geom.getCentroid().y]);
+        self.map.getView().setZoom(Math.max(0, zoom));
     },
     goToLocation: function (x, y, zoom) {
-        this.map.moveTo(new OpenLayers.LonLat(x, y), zoom);
+        self.map.getView().setCenter([x, y]);
+        self.map.getView().setZoom(Math.max(0, zoom));
     },
     getFeature: function (idAnnotation) {
         return this.getUserLayer().getFeature(idAnnotation);
@@ -328,12 +331,12 @@ BrowseImageView = Backbone.View.extend({
                 return layer.vectorsLayer;
             });
             console.log(vectorLayers);
-            var selectFeature = new OpenLayers.Control.SelectFeature(vectorLayers);
+            // var selectFeature = new OpenLayers.Control.SelectFeature(vectorLayers);
             _.each(this.layers, function (layer) {
                 if(!layer.eventAlreadyLoaded) {
                     console.log("ADD EVENTS layer"+layer.userID);
-                    layer.initControls(self, selectFeature);
-                    layer.registerEvents(self.map);
+                    // layer.initControls(self, selectFeature);
+                    // layer.registerEvents(self.map);
                     console.log("ADD EVENTS layer"+layer.isOwner);
                     if (layer.isOwner) {
                         self.userLayer = layer;
@@ -418,7 +421,7 @@ BrowseImageView = Backbone.View.extend({
         var self = this;
         this.map.addLayer(layer);
         this.baseLayers.push(layer);
-        self.map.setBaseLayer(layer);
+        // self.map.setBaseLayer(layer);
         if (!this.review) {
             this.layerSwitcherPanel.addBaseLayer(layer, this.model);
         }
@@ -599,132 +602,139 @@ BrowseImageView = Backbone.View.extend({
             var resolutions = _.union(serverResolutions, digitalResolutions);
 
             var options = {
-                theme: null, maxExtent: new OpenLayers.Bounds(0, 0, metadata.width, metadata.height),
-                resolutions: resolutions,
-                serverResolutions: serverResolutions,
-                fractionalZoom: false,
-                units: 'pixels',
-                tileSize: new OpenLayers.Size(self.tileSize, self.tileSize),
-                controls: [
-                    new OpenLayers.Control.TouchNavigation({
-                        dragPanOptions: {
-                            enableKinetic: window.app.view.isMobile
-                        }
-                    }),
-                    new OpenLayers.Control.Navigation({dragPanOptions: {enableKinetic: window.app.view.isMobile}}),
-                    new OpenLayers.Control.ZoomPanel(),
-                    new OpenLayers.Control.KeyboardDefaults()],
-                eventListeners: {
+                // theme: null, maxExtent: new OpenLayers.Bounds(0, 0, metadata.width, metadata.height),
+                // resolutions: resolutions,
+                // serverResolutions: serverResolutions,
+                // fractionalZoom: false,
+                // units: 'pixels',
+                // tileSize: new OpenLayers.Size(self.tileSize, self.tileSize),
+                // eventListeners: {
 
-                    "zoomend": function (event) {
-                        var map = event.object;
-                        var maxMagnification = self.model.get("magnification") * Math.pow(2, self.nbDigitialZoom);
-                        var deltaZoom = map.getNumZoomLevels() - map.getZoom() - 1;
+                //     "zoomend": function (event) {
+                //         var map = event.object;
+                //         var maxMagnification = self.model.get("magnification") * Math.pow(2, self.nbDigitialZoom);
+                //         var deltaZoom = map.getView().getMaxZoom()() - map.getZoom() - 1;
 
-                        var magnification = maxMagnification;
-                        if (deltaZoom != 0) {
-                            magnification = maxMagnification / (Math.pow(2, deltaZoom));
-                        }
-                        magnification = Math.round(magnification * 100) / 100;
+                //         var magnification = maxMagnification;
+                //         if (deltaZoom != 0) {
+                //             magnification = maxMagnification / (Math.pow(2, deltaZoom));
+                //         }
+                //         magnification = Math.round(magnification * 100) / 100;
 
-                        if(magnification == 0) {
-                            $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).css("color", "red");
-                            $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).html("magnitude : unknown");
-                            $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).css("height", 20);
-                        } else {
-                            if (magnification > self.model.get("magnification")) {
-                                $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).css("color", "red");
-                                $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).html("magnitude : " + magnification + "X<br/>digital");
-                                $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).css("height", 40);
-                            } else {
-                                $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).css("color", "white");
-                                $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).html("magnitude : " + magnification + "X");
-                                $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).css("height", 20);
-                            }
-                        }
+                //         if(magnification == 0) {
+                //             $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).css("color", "red");
+                //             $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).html("magnitude : unknown");
+                //             $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).css("height", 20);
+                //         } else {
+                //             if (magnification > self.model.get("magnification")) {
+                //                 $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).css("color", "red");
+                //                 $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).html("magnitude : " + magnification + "X<br/>digital");
+                //                 $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).css("height", 40);
+                //             } else {
+                //                 $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).css("color", "white");
+                //                 $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).html("magnitude : " + magnification + "X");
+                //                 $("#" + self.divId).find("#zoomInfoPanel" + self.model.id).css("height", 20);
+                //             }
+                //         }
 
 
-                        self.broadcastPosition(metadata.width,metadata.height);
-                    },
-                    "moveend": function () {
-                        self.broadcastPosition(metadata.width,metadata.height);
-                    },
-                    "mousemove": function (e) {
+                //         self.broadcastPosition(metadata.width,metadata.height);
+                //     },
+                //     "moveend": function () {
+                //         self.broadcastPosition(metadata.width,metadata.height);
+                //     },
+                //     "mousemove": function (e) {
 
-                    },
-                    "click": function(e){
-                        var lonLat = self.map.getLonLatFromPixel(this.events.getMousePosition(e));
-                        var lon = lonLat.lon;
-                        var lat = lonLat.lat;
-                        var imgId = self.model.id;
-                        $(self.el).find("#spectra").html("<img src='images/loading.gif'>");
-                        $.get("/api/imageinstance/"+imgId+"/imagesequence/possibilities.json", function(data) {
-                            if(!window.app.isUndefined(data.imageGroup)) {
-                                $.get("/api/imagegroup/"+data.imageGroup+"/imagegroupHDF5.json", function(dd) {
-                                    var spec = new ImageGroupSpectraModel({
-                                        group : dd.id,
-                                        x: lon,
-                                        y: lat
-                                    });
-                                    spec.fetch({
-                                        success: function (ddd, response) {
-                                            var spectra = ddd.get("spectra");
-                                            var graph = {
-                                                //x: data.channel, //trick comment to cheat
-                                                y: spectra,
-                                                mode: 'lines'
-                                            };
-                                            var layout = {
-                                                title:'Spectral distribution'
-                                            };
-                                            $(self.el).find("#spectra").html("<div id='#plotplot'></div>");
+                //     },
+                //     "click": function(e){
+                //         var lonLat = self.map.getLonLatFromPixel(this.events.getMousePosition(e));
+                //         var lon = lonLat.lon;
+                //         var lat = lonLat.lat;
+                //         var imgId = self.model.id;
+                //         $(self.el).find("#spectra").html("<img src='images/loading.gif'>");
+                //         $.get("/api/imageinstance/"+imgId+"/imagesequence/possibilities.json", function(data) {
+                //             if(!window.app.isUndefined(data.imageGroup)) {
+                //                 $.get("/api/imagegroup/"+data.imageGroup+"/imagegroupHDF5.json", function(dd) {
+                //                     var spec = new ImageGroupSpectraModel({
+                //                         group : dd.id,
+                //                         x: lon,
+                //                         y: lat
+                //                     });
+                //                     spec.fetch({
+                //                         success: function (ddd, response) {
+                //                             var spectra = ddd.get("spectra");
+                //                             var graph = {
+                //                                 //x: data.channel, //trick comment to cheat
+                //                                 y: spectra,
+                //                                 mode: 'lines'
+                //                             };
+                //                             var layout = {
+                //                                 title:'Spectral distribution'
+                //                             };
+                //                             $(self.el).find("#spectra").html("<div id='#plotplot'></div>");
 
-                                            Plotly.newPlot('#plotplot', [graph], layout);
-                                        }
-                                    });
-                                });
-                            }
+                //                             Plotly.newPlot('#plotplot', [graph], layout);
+                //                         }
+                //                     });
+                //                 });
+                //             }
 
-                        });
-                    }
-                }
+                //         });
+                //     }
+                // }
             };
 
-            var overviewMap = new OpenLayers.Layer.Image(
-                    "Overview" + self.model.get("id"),
-                self.model.get("thumb"),
-                new OpenLayers.Bounds(0, 0, metadata.width, metadata.height),
-                new OpenLayers.Size(metadata.overviewWidth, metadata.overviewHeight)
-            );
+            // var overviewMap = new OpenLayers.Layer.Image(
+            //         "Overview" + self.model.get("id"),
+            //     self.model.get("thumb"),
+            //     new OpenLayers.Bounds(0, 0, metadata.width, metadata.height),
+            //     new OpenLayers.Size(metadata.overviewWidth, metadata.overviewHeight)
+            // );
 
-            self.createOverviewMap();
-            var overviewMapControl = new OpenLayers.Control.OverviewMap({
-                size: new OpenLayers.Size(metadata.overviewWidth, metadata.overviewHeight),
-                layers: [overviewMap],
-                div: $("#" + self.divId).find('#overviewmapcontent' + self.model.get('id'))[0],
-                minRatio: 1,
-                maxRatio: 1024,
-                mapOptions: {
-                    maxExtent: new OpenLayers.Bounds(0, 0, metadata.width, metadata.height),
-                    maximized: true
-                }
+            // self.createOverviewMap();
+            // var overviewMapControl = new OpenLayers.Control.OverviewMap({
+            //     size: new OpenLayers.Size(metadata.overviewWidth, metadata.overviewHeight),
+            //     layers: [overviewMap],
+            //     div: $("#" + self.divId).find('#overviewmapcontent' + self.model.get('id'))[0],
+            //     minRatio: 1,
+            //     maxRatio: 1024,
+            //     mapOptions: {
+            //         maxExtent: new OpenLayers.Bounds(0, 0, metadata.width, metadata.height),
+            //         maximized: true
+            //     }
+            // });
+
+            var baseLayer = new ol.layer.Tile({
+                source: new ol.source.Zoomify({
+                    url: zoomify_urls,
+                    size: [metadata.width, metadata.height],
+                    crossOrigin: 'anonymous',
+                    tileSize: self.tileSize,
+                })
+            })
+
+            self.map = new ol.Map({
+                layers: [baseLayer],
+                view: new ol.View({
+                    extent: [0, 0, metadata.width, metadata.height],
+                    resolutions,
+                }),
+                target: "map" + self.divPrefixId + self.model.get('id'),
             });
-
-
-            self.map = new OpenLayers.Map("map" + self.divPrefixId + self.model.get('id'), options);
-            self.map.events.register('mousemove', self.map, function (e) {
-                var point = self.map.getLonLatFromPixel(this.events.getMousePosition(e));
-                var coordinates = _.template(" x : <%= x %>, y : <%= y %>", {x: point.lon, y: self.model.get('height') - point.lat});
-                $('#mousePositionContent' + self.model.id).html(coordinates);
-            });
+            // self.map = new OpenLayers.Map("map" + self.divPrefixId + self.model.get('id'), options);
+            // self.map.events.register('mousemove', self.map, function (e) {
+            //     var point = self.map.getLonLatFromPixel(this.events.getMousePosition(e));
+            //     var coordinates = _.template(" x : <%= x %>, y : <%= y %>", {x: point.lon, y: self.model.get('height') - point.lat});
+            //     $('#mousePositionContent' + self.model.id).html(coordinates);
+            // });
             self.initOntology();
             window.app.view.applyPreferences();
 
-            var baseLayer = new OpenLayers.Layer.Zoomify(
-                "Original",
-                zoomify_urls,
-                new OpenLayers.Size(metadata.width, metadata.height)
-            );
+            // var baseLayer = new OpenLayers.Layer.Zoomify(
+            //     "Original",
+            //     zoomify_urls,
+            //     new OpenLayers.Size(metadata.width, metadata.height)
+            // );
             baseLayer.getURL = function (bounds) {
                 bounds = this.adjustBounds(bounds);
                 var res = this.getServerResolution();
@@ -738,9 +748,9 @@ BrowseImageView = Backbone.View.extend({
                 var path = "&tileGroup=" + Math.floor( (tileIndex) / 256 ) +
                     "&z=" + z + "&x=" + x + "&y=" + y + "&channels=" + channels + "&layer=" + layer + "&timeframe=" + timeframe + "&mimeType=" + self.model.get('mime') ;
                 var url = this.url;
-                if (OpenLayers.Util.isArray(url)) {
-                    url = this.selectUrl(path, url);
-                }
+                // if (OpenLayers.Util.isArray(url)) {
+                //     url = this.selectUrl(path, url);
+                // }
 
                 return url + path;
             };
@@ -772,7 +782,7 @@ BrowseImageView = Backbone.View.extend({
                         }
                     }
 
-                    return (new OpenLayers.Size(w, h));
+                    return [w, h];
                 } else {
                     return this.tileSize;
                 }
@@ -782,10 +792,13 @@ BrowseImageView = Backbone.View.extend({
                     console.log(imageFilter.get('processingServer') + imageFilter.get("baseUrl") + url);
                     return imageFilter.get('processingServer') + imageFilter.get("baseUrl") + url;
                 });
-                var layer = new OpenLayers.Layer.Zoomify(
-                    imageFilter.get("name"),
-                    url,
-                    new OpenLayers.Size(metadata.width, metadata.height));
+                var layer = new ol.layer.Tile({
+                    source: new ol.source.Zoomify({
+                        url,
+                        size: [metadata.width, metadata.height],
+                        crossOrigin: 'anonymous',
+                    })
+                })
                 layer.imageFilter = imageFilter;
                 layer.getURL = function (bounds) {
                     bounds = this.adjustBounds(bounds);
@@ -800,22 +813,22 @@ BrowseImageView = Backbone.View.extend({
                     var path = "&tileGroup=" + Math.floor( (tileIndex) / 256 ) +
                         "&z=" + z + "&x=" + x + "&y=" + y + "&channels=" + channels + "&layer=" + layer + "&timeframe=" + timeframe + "&mimeType=" + self.model.get('mime') ;
                     var url = this.url;
-                    if (OpenLayers.Util.isArray(url)) {
-                        url = this.selectUrl(path, url);
-                    }
+                    // if (OpenLayers.Util.isArray(url)) {
+                    //     url = this.selectUrl(path, url);
+                    // }
 
                     return url + path;
                 };
 
                 self.addBaseLayer(layer);
-                self.registerEventTile(layer);
+                // self.registerEventTile(layer);
 
 
             });
-            self.registerEventTile(baseLayer);
+            // self.registerEventTile(baseLayer);
             self.addBaseLayer(baseLayer);
 
-            self.map.zoomToMaxExtent();
+            self.map.getView().setZoom(self.map.getView().getMaxZoom());
             self.map.addControl(overviewMapControl);
 
             //Compute the ideal initial zoom
@@ -829,7 +842,7 @@ BrowseImageView = Backbone.View.extend({
                 imageHeight /= 2;
                 idealZoom--;
             }
-            self.map.zoomTo(idealZoom);
+            self.map.getView().setZoom(idealZoom);
 
 
             //broadcast position every 5 seconds even if user is idle
@@ -840,18 +853,18 @@ BrowseImageView = Backbone.View.extend({
             }
 
 
-            var scaleline = new OpenLayers.Control.ScaleLine({
-                update: function () {
+            var scaleline = new ol.control.ScaleLine({
+                render: function () {
                     var resolution = self.model.get("resolution");
                     var maxMagnification = self.model.get("magnification") * Math.pow(2, self.nbDigitialZoom);
-                    var deltaZoom = self.map.getNumZoomLevels() - self.map.getZoom() - 1;
+                    var deltaZoom = self.map.getView().getMaxZoom()() - self.map.getZoom() - 1;
 
                     var magnification = maxMagnification;
                     if (deltaZoom != 0) {
                         magnification = maxMagnification / (Math.pow(2, deltaZoom));
                     }
                     magnification = Math.round(magnification * 100) / 100;
-                    var zoom = self.model.get("depth") - self.map.zoom;
+                    var zoom = self.model.get("depth") - self.map.getView().getZoom();
                     resolution = resolution * Math.pow(2, zoom);
                     var topPx = 100;
                     var length = 100;
@@ -918,15 +931,15 @@ BrowseImageView = Backbone.View.extend({
     },
     broadcastPosition: function (width,height) {
         var image = this.model.get("id");
-        var lonLat = this.map.getExtent().getCenterLonLat();
-        var lon = lonLat.lon;
-        var lat = lonLat.lat;
+        var lonLat = this.map.getView().getCenter();
+        var lon = lonLat[0];
+        var lat = lonLat[1];
         var zoom = this.map.zoom;
         if (zoom == null || lon == null || lat == null) {
             return;
         } //map not yet initialized
 
-        var mapArea = this.map.getExtent();
+        var mapArea = this.map.getView().calculateExtent();
 
         new UserPositionModel({
             zoom: zoom,
@@ -992,7 +1005,7 @@ BrowseImageView = Backbone.View.extend({
                 return;
             }
 
-            var tiles = self.map.baseLayer.grid;
+            var tiles = self.map.getLayers()[0].getTileGrid();
             var newCanvas = document.createElement('canvas');
             var newContext = newCanvas.getContext("2d");
             var newCanvasWidth = tiles[0].length * tiles[0][0].size.w;
@@ -1079,16 +1092,17 @@ BrowseImageView = Backbone.View.extend({
                 }
                 var polyPoints = [];
                 for (var i = 0; i + 5 < outline.points.length; i = i + 5) {
-                    var _p = self.map.getLonLatFromViewPortPx({ x: outline.points[i].x, y: outline.points[i].y});
-                    var point = new OpenLayers.Geometry.Point(
+                    var _p = self.map.getCoordinateFromPixel({ x: outline.points[i].x, y: outline.points[i].y});
+                    var point = new ol.geom.Point(
                         _p.lon,
                         _p.lat);
                     polyPoints.push(point);
                 }
                 polyPoints.push(polyPoints[0]);
-                var linear_ring = new OpenLayers.Geometry.LinearRing(polyPoints);
-                var polygonFeature = new OpenLayers.Feature.Vector(
-                    new OpenLayers.Geometry.Polygon([linear_ring]), null, {});
+                var linear_ring = new ol.geom.LinearRing(polyPoints);
+                var polygonFeature = new ol.Feature({
+                    geometry: new ol.geom.Polygon([linear_ring]),
+                });
                 self.getUserLayer().addAnnotation(polygonFeature);
             };
 
@@ -1484,7 +1498,7 @@ BrowseImageView = Backbone.View.extend({
         toolbar.find('button[id=camera' + this.model.get('id') + ']').click(function () {
 
             var maxMagnification = self.model.get("magnification") * Math.pow(2, self.nbDigitialZoom);
-            var deltaZoom = self.map.getNumZoomLevels() - self.map.getZoom() - 1;
+            var deltaZoom = self.map.getView().getMaxZoom()() - self.map.getView().getZoom() - 1;
             var magnification = maxMagnification;
             if (deltaZoom != 0) {
                 magnification = maxMagnification / (Math.pow(2, deltaZoom));
@@ -1492,15 +1506,15 @@ BrowseImageView = Backbone.View.extend({
             magnification = Math.round(magnification * 100) / 100;
 
 
-            console.log(self.map.getZoom());
-            console.log(self.map.getNumZoomLevels());
+            console.log(self.map.getView().getZoom());
+            console.log(self.map.getView().getMaxZoom()());
             console.log(magnification);
             console.log(deltaZoom);
             var zoom = deltaZoom+1;
             console.log("depth");
-            var serverSidezoom = self.model.get('depth') - self.map.getZoom();
+            var serverSidezoom = self.model.get('depth') - self.map.getView().getZoom();
             //use webservice
-            var mapBounds = self.map.getExtent();
+            var mapBounds = self.map.getView().calculateExtent();
             var ol_left = Math.max(0, mapBounds.left);
             var ol_top = Math.max(0, mapBounds.top);
             var x = Math.max(Math.round(ol_left),0);
