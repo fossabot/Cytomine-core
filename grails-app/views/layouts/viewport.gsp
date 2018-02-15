@@ -26,7 +26,7 @@
 <link rel='stylesheet' href='lib/stepy/css/jquery.stepy.bootstrap.css' type='text/css'/>
 <link rel='stylesheet' href='lib/multiselect-next/css/jquery.uix.multiselect.css' type='text/css'/>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
-<link rel='stylesheet' href='lib/OpenLayers-2.13.1/theme/default/style.css' type='text/css'/>
+<link rel='stylesheet' href='lib/ol/ol.css' type='text/css'/>
 <link rel="stylesheet" href="lib/bootstrap-3.0.3/css/bootstrap.min.css"/>
 <link rel="stylesheet" href="lib/Trumbowyg/ui/trumbowyg.min.css"/>
 <link rel="stylesheet" href="lib/Trumbowyg/plugins/colors/ui/trumbowyg.colors.min.css"/>
@@ -77,7 +77,7 @@ body {
     %{--<link rel="stylesheet" href="https://cdn.rawgit.com/novus/nvd3/v1.7.1/build/nv.d3.css" /> <!-- bug with svg style in nb.d3.min.css -->--}%
 
 %{--<script type="text/javascript" src="lib/OpenLayers-2.12/Openlayers-cytomine.js"></script>--}%
-<script type="text/javascript" src="lib/OpenLayers-2.13.1/OpenLayers.js"></script>
+<script type="text/javascript" src="lib/ol/ol-debug.js"></script>
 
 <!-- fileupload -->
 <script type="text/javascript" src="lib/fileupload-8.8.3/js/jquery.iframe-transport.js"></script>
