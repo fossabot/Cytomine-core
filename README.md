@@ -1,4 +1,6 @@
 # Cytomine Core
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmehdyouras%2FCytomine-core.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmehdyouras%2FCytomine-core?ref=badge_shield)
+
 
 
 When using our software, we kindly ask you to cite our website url and related publications in all your work (publications, studies, oral presentations,...). In particular, we recommend to cite (Marée et al., Bioinformatics 2016) paper, and to use our logo when appropriate. See our license files for additional details.
@@ -26,3 +28,7 @@ Full documentation can be found [online](http://doc.cytomine.be)
 ## How to install it
 
 See our [Cytomine-bootstrap](https://github.com/cytomine/Cytomine-bootstrap) project to install it with Docker
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmehdyouras%2FCytomine-core.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmehdyouras%2FCytomine-core?ref=badge_large)
